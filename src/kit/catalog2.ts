@@ -1,4 +1,4 @@
-import { R, T, mk, type ComponentSpec, type Part } from "./spec";
+import { C, R, T, mk, type ComponentSpec, type Part } from "./spec";
 
 const P = (n: number, name: string, role: string, ...loupe: string[]): Part => ({ n, name, role, loupe });
 const LA = "Library & Archive", CR = "Control Room", MS = "Music Studio", CB = "Customs & Bureaucracy", OW = "Observatory & Weather", TC = "Typesetter’s Case";
@@ -7,7 +7,8 @@ export const CATALOG_2: ComponentSpec[] = [
   mk(19, { id: "index-drawer", name: "Index Drawer", category: "Navigation", world: LA, verb: "file", kind: "instrument", uncommon: true, motion: "subtle", tags: ["tabs", "cards", "catalogue"],
     tagline: "ORDER IS A KIND OF KINDNESS.", description: "Cards stand in a drawer. One is pulled forward.", pitch: "Tabs as guide cards in a catalogue drawer. Hover raises a card; choosing it pulls it clear and names its range.",
     parts: [P(1, "Card", "One guide card", "line", "corners", "rise", "size"), P(2, "Tab", "The lettered ear", "tabs", "cap", "trk"), P(3, "Count", "Cards behind this guide", "soft", "cap")],
-    settings: [T("tabs", "Ranges", "A–F G–M N–S T–Z"), R("rise", "Lift", 4, 14, 8, "How far a card stands up.", { unit: "px", group: "Movement" })],
+    settings: [C("style", "Style", ["Drawer", "Cabinet"], "Drawer", "Drawer pulls forward; Cabinet is oak card catalogue."), T("tabs", "Ranges", "A–F G–M N–S T–Z"), R("rise", "Lift", 4, 14, 8, "How far a card stands up.", { unit: "px", group: "Movement" })],
+    versions: [{ name: "Oak library card", values: { style: "Cabinet" } }],
     details: [{ cls: "a", text: "Cards rise one after another, 24 ms apart." }, { cls: "e", text: "Arrows wrap around the drawer; one tab stop." }, { cls: "c", text: "The pulled card counts the cards filed behind it." }],
     signature: { name: "Each card is pulled in turn", ms: 2600 } }),
   mk(20, { id: "due-date-slip", name: "Due Date Slip", category: "Time", world: LA, verb: "date", kind: "specimen", uncommon: true, motion: "subtle", tags: ["date", "stamp", "history"],
@@ -43,7 +44,8 @@ export const CATALOG_2: ComponentSpec[] = [
   mk(25, { id: "fader", name: "Channel Fader", category: "Sliders", world: MS, verb: "ride", kind: "instrument", uncommon: false, motion: "active", tags: ["slider", "vertical", "level"], plateControl: "level",
     tagline: "LEVELS ARE RIDDEN, NOT SET.", description: "A cap rides a rail. The meter answers beside it.", pitch: "A vertical slider as a mixing-desk fader, with a twelve-segment meter. The top two segments take the accent.",
     parts: [P(1, "Rail", "The slot", "line", "size"), P(2, "Cap", "The part you ride", "level", "corners", "accent", "speed"), P(3, "Scale", "Seven ticks", "soft"), P(4, "Meter", "Twelve segments", "line", "label")],
-    settings: [R("level", "Level", 0, 100, 62, "Where the cap sits.", { group: "Content" }), T("label", "Channel name", "Channel 1")],
+    settings: [C("style", "Style", ["Single", "Bank"], "Single", "Single fader; Bank mixes four channel faders together."), R("level", "Level", 0, 100, 62, "Where the cap sits.", { group: "Content" }), T("label", "Channel name", "Channel 1")],
+    versions: [{ name: "Console bank", values: { style: "Bank" } }],
     details: [{ cls: "c", text: "The reading is in decibels; zero reads −∞." }, { cls: "e", text: "Up and Down move two steps; Shift moves ten." }, { cls: "a", text: "The meter flickers a segment while the pointer is near." }],
     signature: { name: "A slow ride up and down", ms: 2400 } }),
   mk(26, { id: "metronome", name: "Metronome", category: "Loaders", world: MS, verb: "swing", kind: "theatre", uncommon: true, motion: "active", tags: ["loading", "tempo", "pendulum"], plateControl: "bpm",

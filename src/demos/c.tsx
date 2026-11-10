@@ -43,23 +43,36 @@ export function ContactSheet(p: DemoProps) {
   const [sel, setSel] = useState(1);
   const t = useTick(520, a.sig);
   const cur = a.sig ? t % n : Math.min(sel, n - 1);
+  const isTabs = p.v.style === "Tabs";
   return (
     <div {...a.bind} role="radiogroup" aria-label="Choose a frame" className="flex flex-col gap-2" dir="ltr"
       onKeyDown={(e) => { if (e.key === "ArrowRight") setSel((s) => Math.min(n - 1, s + 1)); if (e.key === "ArrowLeft") setSel((s) => Math.max(0, s - 1)); }}>
-      <div data-part="1" className="flex gap-0 border-y border-ink py-2" style={{ borderWidth: "var(--ln) 0" }}>
-        {Array.from({ length: n }, (_, i) => (
-          <button key={i} role="radio" aria-checked={cur === i} tabIndex={cur === i ? 0 : -1} onClick={() => setSel(i)} data-part={i === 0 ? "2" : undefined} className="relative mx-1 block h-[52px] w-[42px] border border-ink" style={bw} aria-label={`Frame ${start + i}A`}>
-            <i className="absolute inset-x-0 bottom-0 bg-ink" style={{ height: `${22 + ((i * 37 + start * 11) % 50)}%`, opacity: 0.18 + ((i * 3) % 4) * 0.16 }} />
-            <span className="m soft absolute -bottom-[18px] left-0" style={{ fontSize: 9 }}>{start + i}A</span>
-            {cur === i && (
-              <svg data-part="3" viewBox="0 0 60 70" className="pointer-events-none absolute -inset-2" style={{ color: "var(--acc)" }}>
-                <path key={i} className="ln" strokeWidth={2} d="M30 4 C52 2 58 20 56 38 C54 60 40 68 26 66 C8 64 2 44 4 28 C6 10 22 2 38 6" pathLength={1} strokeDasharray={1} style={{ ["--len" as string]: 1, animation: p.reduced ? "none" : `drawIn ${d(480)} var(--ez) both`, strokeWidth: "calc(var(--ln) * 2)" }} />
-              </svg>
-            )}
-          </button>
-        ))}
-      </div>
-      <span className="m mt-3 flex justify-between gap-3"><span className="soft">Roll 04</span><span>Print {start + cur}A</span></span>
+      {isTabs ? (
+        <div data-part="1" className="flex border-b border-ink" style={{ borderBottomWidth: "var(--ln)" }}>
+          {Array.from({ length: n }, (_, i) => (
+            <button key={i} role="radio" aria-checked={cur === i} tabIndex={cur === i ? 0 : -1} onClick={() => setSel(i)} data-part={i === 0 ? "2" : undefined}
+              className="m relative -mb-px border px-3 py-1.5 text-[11px] font-medium tracking-tight"
+              style={{ borderWidth: "var(--ln)", borderColor: cur === i ? "var(--ink)" : "transparent", borderBottomColor: cur === i ? "var(--paper)" : "var(--ink)", background: cur === i ? "var(--paper)" : "transparent", color: cur === i ? "var(--acc)" : "var(--ink)" }} aria-label={`Strip ${start + i}`}>
+              EXP {start + i}
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div data-part="1" className="flex gap-0 border-y border-ink py-2" style={{ borderWidth: "var(--ln) 0" }}>
+          {Array.from({ length: n }, (_, i) => (
+            <button key={i} role="radio" aria-checked={cur === i} tabIndex={cur === i ? 0 : -1} onClick={() => setSel(i)} data-part={i === 0 ? "2" : undefined} className="relative mx-1 block h-[52px] w-[42px] border border-ink" style={bw} aria-label={`Frame ${start + i}A`}>
+              <i className="absolute inset-x-0 bottom-0 bg-ink" style={{ height: `${22 + ((i * 37 + start * 11) % 50)}%`, opacity: 0.18 + ((i * 3) % 4) * 0.16 }} />
+              <span className="m soft absolute -bottom-[18px] left-0" style={{ fontSize: 9 }}>{start + i}A</span>
+              {cur === i && (
+                <svg data-part="3" viewBox="0 0 60 70" className="pointer-events-none absolute -inset-2" style={{ color: "var(--acc)" }}>
+                  <path key={i} className="ln" strokeWidth={2} d="M30 4 C52 2 58 20 56 38 C54 60 40 68 26 66 C8 64 2 44 4 28 C6 10 22 2 38 6" pathLength={1} strokeDasharray={1} style={{ ["--len" as string]: 1, animation: p.reduced ? "none" : `drawIn ${d(480)} var(--ez) both`, strokeWidth: "calc(var(--ln) * 2)" }} />
+                </svg>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
+      <span className="m mt-3 flex justify-between gap-3"><span className="soft">Roll 04</span><span>{isTabs ? `Exposure ${start + cur}` : `Print ${start + cur}A`}</span></span>
     </div>
   );
 }
@@ -131,18 +144,33 @@ export function DetentKnob(p: DemoProps) {
   const n = Number(p.v.detents), names = String(p.v.labels).split(/\s+/).filter(Boolean);
   const [pos, setPos] = useState(1);
   const t = useTick(420, a.sig);
-  const cur = a.sig ? t % n : Math.min(pos, n - 1), span = 240, ang = -span / 2 + (cur / Math.max(1, n - 1)) * span;
+  const isDial = p.v.style === "Dial";
+  const cur = a.sig ? t % n : Math.min(pos, n - 1), span = isDial ? 280 : 240, ang = -span / 2 + (cur / Math.max(1, n - 1)) * span;
   const step = (k: number) => setPos((s) => Math.min(n - 1, Math.max(0, Math.min(s, n - 1) + k)));
+  const dialReading = (88.1 + (cur / Math.max(1, n - 1)) * 19.8).toFixed(1);
   return (
-    <div {...a.bind} role="slider" tabIndex={0} aria-valuemin={1} aria-valuemax={n} aria-valuenow={cur + 1} aria-valuetext={names[cur] ?? String(cur + 1)} aria-label="Band selector" dir="ltr"
+    <div {...a.bind} role="slider" tabIndex={0} aria-valuemin={1} aria-valuemax={n} aria-valuenow={cur + 1} aria-valuetext={isDial ? `${dialReading} MHz` : (names[cur] ?? String(cur + 1))} aria-label="Band selector" dir="ltr"
       className="flex cursor-pointer select-none items-center gap-5" onClick={() => setPos((s) => (Math.min(s, n - 1) + 1) % n)}
       onKeyDown={(e) => { if (e.key === "ArrowRight" || e.key === "ArrowUp") step(1); if (e.key === "ArrowLeft" || e.key === "ArrowDown") step(-1); }}>
       <svg width="104" height="104" viewBox="-52 -52 104 104">
-        <g data-part="3">{Array.from({ length: n }, (_, i) => { const r = ((-span / 2 + (i / Math.max(1, n - 1)) * span - 90) * Math.PI) / 180; return <path key={i} className="ln" d={`M${Math.cos(r) * 42} ${Math.sin(r) * 42} L${Math.cos(r) * 50} ${Math.sin(r) * 50}`} style={{ stroke: i === cur ? "var(--acc)" : undefined, strokeWidth: i === cur ? "calc(var(--ln) * 2.5)" : undefined }} />; })}</g>
+        <g data-part="3">
+          {isDial ? (
+            Array.from({ length: 29 }, (_, i) => {
+              const r = ((-span / 2 + (i / 28) * span - 90) * Math.PI) / 180;
+              const isMajor = i % 7 === 0;
+              return <path key={i} className="ln" d={`M${Math.cos(r) * (isMajor ? 40 : 44)} ${Math.sin(r) * (isMajor ? 40 : 44)} L${Math.cos(r) * 50} ${Math.sin(r) * 50}`} style={{ stroke: Math.abs(i / 28 - cur / Math.max(1, n - 1)) < 0.05 ? "var(--acc)" : undefined }} />;
+            })
+          ) : (
+            Array.from({ length: n }, (_, i) => { const r = ((-span / 2 + (i / Math.max(1, n - 1)) * span - 90) * Math.PI) / 180; return <path key={i} className="ln" d={`M${Math.cos(r) * 42} ${Math.sin(r) * 42} L${Math.cos(r) * 50} ${Math.sin(r) * 50}`} style={{ stroke: i === cur ? "var(--acc)" : undefined, strokeWidth: i === cur ? "calc(var(--ln) * 2.5)" : undefined }} />; })
+          )}
+        </g>
         <circle data-part="1" r="34" className="ln" fill={a.down ? "var(--ink)" : "none"} />
         <g data-part="2" style={{ transform: `rotate(${ang}deg)`, transition: `transform ${d(240)} var(--ez)` }}><path className="ln" d="M0 -34 V-16" style={{ strokeWidth: "calc(var(--ln) * 2)", stroke: a.down ? "var(--paper)" : undefined }} /></g>
       </svg>
-      <span className="flex flex-col"><span data-part="4" className="font-display text-[30px] font-bold leading-none">{(names[cur] ?? String(cur + 1)).slice(0, 4)}</span><span className="m soft">Detent {cur + 1} of {n}</span></span>
+      <span className="flex flex-col">
+        <span data-part="4" className="font-display text-[30px] font-bold leading-none">{isDial ? dialReading : (names[cur] ?? String(cur + 1)).slice(0, 4)}</span>
+        <span className="m soft">{isDial ? "FM MHz continuous" : `Detent ${cur + 1} of ${n}`}</span>
+      </span>
     </div>
   );
 }

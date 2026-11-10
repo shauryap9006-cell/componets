@@ -14,9 +14,13 @@ export function IndexDrawer(p: DemoProps) {
   const [sel, setSel] = useState(0), [hov, setHov] = useState(-1);
   const t = useTick(560, a.sig);
   const cur = a.sig ? t % n : Math.min(sel, n - 1);
+  const isCabinet = p.v.style === "Cabinet";
   return (
     <div {...a.bind} role="tablist" aria-label="Catalogue drawer" dir="ltr" className="relative h-[124px] w-[232px]"
       onKeyDown={(e) => { if (e.key === "ArrowRight") setSel((s) => (s + 1) % n); if (e.key === "ArrowLeft") setSel((s) => (s - 1 + n) % n); }}>
+      {isCabinet && (
+        <div className="pointer-events-none absolute -inset-2 rounded border border-ink opacity-30" style={{ borderWidth: "var(--ln)" }} />
+      )}
       {tabs.map((tb, i) => {
         const up = cur === i ? rise + 6 : hov === i ? rise : 0;
         return (
@@ -25,7 +29,12 @@ export function IndexDrawer(p: DemoProps) {
               className="m absolute -top-[19px] h-[19px] border border-b-0 border-ink px-2" style={{ borderWidth: "var(--ln) var(--ln) 0", left: `${(i / n) * 100}%`, width: `${100 / n}%`, background: cur === i ? "var(--ink)" : "var(--plate)", color: cur === i ? "var(--paper)" : undefined }}>
               <span className="block truncate">{tb}</span>
             </button>
-            {cur === i && <span data-part="3" className="m soft absolute left-3 top-2">Drawer {String(i + 1).padStart(2, "0")} · {(i + 2) * 112} cards</span>}
+            {cur === i && (
+              <div data-part="3" className="m soft absolute inset-x-3 top-2 flex flex-col gap-0.5">
+                <span className="flex justify-between"><span>Drawer {String(i + 1).padStart(2, "0")}</span><span>{(i + 2) * 112} cards</span></span>
+                {isCabinet && <span className="font-mono text-[9px] opacity-75">DEWEY 025.43 · TRAY {String.fromCharCode(65 + i)}</span>}
+              </div>
+            )}
           </div>
         );
       })}

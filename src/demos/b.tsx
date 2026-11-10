@@ -78,6 +78,7 @@ export function CaliperSlider(p: DemoProps) {
   const t = useTick(30, a.sig && !p.reduced);
   const val = a.sig ? 50 + Math.sin(t / 8) * 35 : Number(p.v.value);
   const W = 220, x = (val / 100) * W, n = Number(p.v.ticks);
+  const isRuler = p.v.style === "Ruler";
   const from = (cx: number) => { const b = ref.current!.getBoundingClientRect(); p.set("value", Math.round(Math.min(100, Math.max(0, ((cx - b.left) / b.width) * 100)))); };
   return (
     <div {...a.bind} ref={ref} dir="ltr" role="slider" tabIndex={0} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(val)} aria-label={`Measure in ${p.v.unit}`}
@@ -90,11 +91,28 @@ export function CaliperSlider(p: DemoProps) {
           <path className="ln" d={`M0 14 H${x} M0 9 v10 M${x} 9 v10`} style={{ transition: drag ? "none" : `d ${d(240)} var(--ez)` }} />
           <text x={x / 2} y="9" textAnchor="middle" className="m" fill="var(--ink)">{val.toFixed(1)} {String(p.v.unit).slice(0, 4)}</text>
         </g>
-        <path data-part="1" className="ln" d={`M0 26 V62 H${W} M0 26 h8 v24`} />
-        <g data-part="2" style={{ transform: `translateX(${x}px)`, transition: drag || a.sig ? "none" : `transform ${d(240)} var(--ez)`, color: a.over || drag ? "var(--acc)" : undefined }}>
-          <path className="ln" d="M0 26 V70 h14 v-8 M0 26 h-8 v24" /><rect x="3" y="64" width="8" height="3" fill="currentColor" />
-        </g>
-        <g data-part="3" className="soft">{Array.from({ length: n + 1 }, (_, i) => <path key={i} className="ln" d={`M${(i / n) * W} 62 v${i % 5 === 0 ? 10 : 5}`} />)}</g>
+        {isRuler ? (
+          <>
+            <rect data-part="1" x="0" y="30" width={W} height="32" className="ln" fill="none" />
+            <g data-part="3" className="soft">
+              {Array.from({ length: n + 1 }, (_, i) => (
+                <path key={i} className="ln" d={`M${(i / n) * W} 30 v${i % 5 === 0 ? 9 : 5} M${(i / n) * W} 62 v-${i % 5 === 0 ? 9 : 5}`} />
+              ))}
+            </g>
+            <g data-part="2" style={{ transform: `translateX(${Math.max(0, Math.min(W - 20, x - 10))}px)`, transition: drag || a.sig ? "none" : `transform ${d(240)} var(--ez)` }}>
+              <rect x="0" y="24" width="20" height="44" className="ln" fill="var(--paper)" opacity="0.92" />
+              <line x1="10" y1="24" x2="10" y2="68" stroke="var(--acc)" strokeWidth="calc(var(--ln) * 1.5)" />
+            </g>
+          </>
+        ) : (
+          <>
+            <path data-part="1" className="ln" d={`M0 26 V62 H${W} M0 26 h8 v24`} />
+            <g data-part="2" style={{ transform: `translateX(${x}px)`, transition: drag || a.sig ? "none" : `transform ${d(240)} var(--ez)`, color: a.over || drag ? "var(--acc)" : undefined }}>
+              <path className="ln" d="M0 26 V70 h14 v-8 M0 26 h-8 v24" /><rect x="3" y="64" width="8" height="3" fill="currentColor" />
+            </g>
+            <g data-part="3" className="soft">{Array.from({ length: n + 1 }, (_, i) => <path key={i} className="ln" d={`M${(i / n) * W} 62 v${i % 5 === 0 ? 10 : 5}`} />)}</g>
+          </>
+        )}
         <text x="0" y="90" className="m soft" fill="currentColor">0</text><text x={W} y="90" textAnchor="end" className="m soft" fill="currentColor">100</text>
       </svg>
     </div>
@@ -107,14 +125,26 @@ export function DimensionInput(p: DemoProps) {
   const [txt, setTxt] = useState("");
   const demo = "Bracket, left".slice(0, a.sig ? 13 : 0);
   const val = a.sig && !txt ? demo : txt, max = Number(p.v.max), n = val.length, over = n > max;
+  const isDrafting = p.v.style === "Drafting";
   return (
     <label {...a.bind} className="flex w-[240px] flex-col gap-1 font-mono text-[16px]">
       <span data-part="3" className="tr relative h-4" style={{ width: `min(${Math.max(n, 1)}ch, 100%)`, color: over ? "var(--acc)" : undefined, marginInlineStart: 12, transitionDuration: d(240) }} aria-hidden>
         <i className="absolute inset-x-0 top-2 bg-current" style={{ height: "var(--ln)" }} />
         <i className="absolute left-0 top-0 h-4 bg-current" style={{ width: "var(--ln)" }} /><i className="absolute right-0 top-0 h-4 bg-current" style={{ width: "var(--ln)" }} />
       </span>
-      <input data-part="1" value={val} onChange={(e) => setTxt(e.target.value)} placeholder={String(p.v.placeholder)} aria-invalid={over} aria-describedby="dim-count"
-        className="h-12 w-full border border-ink bg-transparent px-3 outline-none placeholder:text-ink/40 focus:border-[var(--acc)]" style={bw} />
+      {isDrafting ? (
+        <div data-part="1" className="relative flex h-12 w-full items-center border-b border-ink bg-transparent px-3" style={{ borderBottomWidth: "calc(var(--ln) * 1.5)" }}>
+          <span className="absolute -left-1 -top-1 h-3 w-px -rotate-45 bg-ink" />
+          <span className="absolute -right-1 -top-1 h-3 w-px -rotate-45 bg-ink" />
+          <span className="absolute -left-1 -bottom-1 h-3 w-px -rotate-45 bg-ink" />
+          <span className="absolute -right-1 -bottom-1 h-3 w-px -rotate-45 bg-ink" />
+          <input value={val} onChange={(e) => setTxt(e.target.value)} placeholder={String(p.v.placeholder)} aria-invalid={over} aria-describedby="dim-count"
+            className="w-full bg-transparent outline-none placeholder:text-ink/40" />
+        </div>
+      ) : (
+        <input data-part="1" value={val} onChange={(e) => setTxt(e.target.value)} placeholder={String(p.v.placeholder)} aria-invalid={over} aria-describedby="dim-count"
+          className="h-12 w-full border border-ink bg-transparent px-3 outline-none placeholder:text-ink/40 focus:border-[var(--acc)]" style={bw} />
+      )}
       <span id="dim-count" data-part="2" className="m flex justify-between"><span className="soft">{over ? `Over by ${n - max}` : n === 0 ? "Empty" : "Within tolerance"}</span><span style={{ color: over ? "var(--acc)" : undefined }}>{String(n).padStart(2, "0")} / {max} ch</span></span>
     </label>
   );

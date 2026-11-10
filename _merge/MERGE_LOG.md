@@ -95,5 +95,23 @@ Tracking log for components imported into main UI library from source folders.
 - **ticker-clock (Imported as New Plate)**: FIG. 056 in `src/kit/catalog3.ts` and `src/demos/h.tsx`. Linear horizontal continuous time tape with center indicator needle.
 - **film-leader (Imported as New Plate)**: FIG. 057 in `src/kit/catalog3.ts` and `src/demos/h.tsx`. SMPTE universal cinema countdown leader with 360° sweeping optical radial arm.
 
+---
+
+## Batch 3: Selectors, Inputs & Sliders
+- **caliper-ruler (Added as Variant)**: Merged as `"Ruler"` variant of FIG. 010 `caliper-slider` (Sliders). Engraved drafting desk rule with sliding hairline optical runner cursor.
+- **dimension-drafting (Added as Variant)**: Merged as `"Drafting"` variant of FIG. 011 `dimension-input` (Inputs). Architectural extension/witness lines with 45° corner tick cuts and baseline rule.
+- **contact-tabs (Added as Variant)**: Merged as `"Tabs"` variant of FIG. 014 `contact-sheet` (Selectors). Film sleeve index tabs with active exposure notch.
+- **detent-dial (Added as Variant)**: Merged as `"Dial"` variant of FIG. 018 `detent-knob` (Selectors). Continuous FM radio frequency dial with 280° sweep and high-density fine degree markings.
+- **index-cabinet (Added as Variant)**: Merged as `"Cabinet"` variant of FIG. 019 `index-drawer` (Navigation). Oak library catalogue drawer casing with Dewey classification header.
+- **fader-bank (Added as Variant)**: Merged as `"Bank"` variant of FIG. 025 `fader` (Sliders). Three-channel console mixer bank with companion channel meters and master level.
+- **patch-bay (Imported as New Plate)**: FIG. 058 in `src/kit/catalog3.ts` and `src/demos/i.tsx`. Audio switchboard jackfield with catenary patch cords and live signal routing matrix.
+- **teleprinter (Imported as New Plate)**: FIG. 059 in `src/kit/catalog3.ts` and `src/demos/i.tsx`. Teletype dispatch field with uppercase translation, baud status, and blinking block caret.
+- **scrubbable-number (Imported as New Plate)**: FIG. 060 in `src/kit/catalog3.ts` and `src/demos/i.tsx`. Drafting value scrubber with horizontal drag capture, fine tick scale, and numeric readout.
+- **combination-lock (Imported as New Plate)**: FIG. 061 in `src/kit/catalog3.ts` and `src/demos/i.tsx`. Triple-tumbler vault combination lock with interactive stepping and shackle unlock release.
+- **protractor (Imported as New Plate)**: FIG. 062 in `src/kit/catalog3.ts` and `src/demos/i.tsx`. Semicircular 180° precision drafting protractor with sweeping cursor arm and digital degree readout.
+- **file-dropzone (Imported as New Plate)**: FIG. 063 in `src/kit/catalog3.ts` and `src/demos/i.tsx`. Darkroom light table negative inspection tray with crop corners and metadata file receipt.
+- **shortcut-recorder (Imported as New Plate)**: FIG. 064 in `src/kit/catalog3.ts` and `src/demos/i.tsx`. Mechanical keycap binding recorder with live keystroke capture and embossed tile aesthetic.
+
+
 
 

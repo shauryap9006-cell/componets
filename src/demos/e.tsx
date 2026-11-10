@@ -14,9 +14,29 @@ export function Fader(p: DemoProps) {
   const t = useTick(60, a.over && !p.reduced);
   const lvl = a.sig ? 50 + Math.sin(t / 5) * 40 : Number(p.v.level), H = 108;
   const vu = Math.max(0, Math.min(12, Math.round((lvl / 100) * 12 + (a.over ? Math.sin(t * 1.7) * 1.2 : 0))));
+  const isBank = p.v.style === "Bank";
   const from = (cy: number) => { const b = ref.current!.getBoundingClientRect(); p.set("level", Math.round(Math.min(100, Math.max(0, (1 - (cy - b.top) / b.height) * 100)))); };
   return (
     <div {...a.bind} dir="ltr" className="flex items-end gap-4">
+      {isBank && (
+        <div className="flex items-end gap-2 opacity-60" aria-hidden>
+          {[0.82, 0.94].map((scale, ch) => {
+            const chLvl = Math.max(0, Math.min(100, lvl * scale));
+            const chVu = Math.max(0, Math.min(12, Math.round((chLvl / 100) * 12)));
+            return (
+              <div key={ch} className="flex items-end gap-1.5">
+                <div className="relative w-8 select-none" style={{ height: H }}>
+                  <i className="absolute inset-y-0 left-1/2 bg-ink" style={{ width: "var(--ln)" }} />
+                  <span className="absolute left-1/2 grid h-4 w-6 -translate-x-1/2 place-items-center border border-ink bg-paper" style={{ ...bw, bottom: `calc(${chLvl}% - 8px)` }}>
+                    <i className="block w-3.5" style={{ height: "var(--ln)", background: "var(--ink)" }} />
+                  </span>
+                </div>
+                <div className="flex flex-col-reverse gap-[3px]">{Array.from({ length: 12 }, (_, i) => <i key={i} className="block h-[6px] w-2 border border-ink" style={{ borderWidth: "var(--ln)", background: i < chVu ? "var(--ink)" : "transparent" }} />)}</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
       <div ref={ref} role="slider" aria-orientation="vertical" tabIndex={0} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(lvl)} aria-label={`${p.v.label} level`} className="relative w-14 touch-none select-none" style={{ height: H, cursor: "ns-resize" }}
         onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); setDrag(true); from(e.clientY); }} onPointerMove={(e) => drag && from(e.clientY)} onPointerUp={() => setDrag(false)}
         onKeyDown={(e) => { const s = e.shiftKey ? 10 : 2; if (e.key === "ArrowUp") p.set("level", Math.min(100, lvl + s)); if (e.key === "ArrowDown") p.set("level", Math.max(0, lvl - s)); }}>
@@ -27,7 +47,7 @@ export function Fader(p: DemoProps) {
         </span>
       </div>
       <div data-part="4" className="flex flex-col-reverse gap-[3px]" aria-hidden>{Array.from({ length: 12 }, (_, i) => <i key={i} className="block h-[6px] w-3 border border-ink" style={{ borderWidth: "var(--ln)", background: i < vu ? (i > 9 ? "var(--acc)" : "var(--ink)") : "transparent" }} />)}</div>
-      <span className="m flex flex-col gap-1"><span className="soft truncate">{String(p.v.label)}</span><span>{lvl < 1 ? "−∞" : `${((lvl - 75) * 0.4).toFixed(1)}`} dB</span></span>
+      <span className="m flex flex-col gap-1"><span className="soft truncate">{isBank ? "Master / Bank" : String(p.v.label)}</span><span>{lvl < 1 ? "−∞" : `${((lvl - 75) * 0.4).toFixed(1)}`} dB</span></span>
     </div>
   );
 }
