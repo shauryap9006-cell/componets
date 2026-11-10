@@ -1,0 +1,125 @@
+/* FILE: tokens.css (import once in your application) */
+:root {
+  --font-sans: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Archivo', 'Geist', Arial, sans-serif;
+  --font-mono: 'Courier Prime', 'IBM Plex Mono', 'Geist Mono', 'Courier New', monospace;
+  --font-feature-numeric: 'tnum', 'zero';
+  --columns: 12;
+  --gutter: 24px;
+  --page-margin: clamp(16px, 4vw, 64px);
+  --content-width: 1440px;
+  --baseline: 8px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-96: 96px;
+  --space-128: 128px;
+  --space-192: 192px;
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-md: 19px;
+  --text-lg: 25px;
+  --text-xl: 33px;
+  --text-2xl: 44px;
+  --text-3xl: 59px;
+  --text-display: clamp(64px, 14.3vw, 224px);
+  --leading-body: 24px;
+  --leading-label: 16px;
+  --tracking-label: 0.06em;
+  --tracking-display: -0.065em;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-bold: 650;
+  --hairline: 1px;
+  --rule-strong: 2px;
+  --rule-heavy: 4px;
+  --radius: 0;
+  --round: 50%;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --dur-micro: 120ms;
+  --dur-ui: 240ms;
+  --dur-layout: 480ms;
+  --dur-reveal: 800ms;
+  --stagger: 24ms;
+  --offset-1: 4px 4px 0 var(--ink);
+  --focus: 2px solid var(--accent);
+}
+
+:root, [data-theme='Paper'], [data-theme='paper'] {
+  color-scheme: light;
+  --paper: oklch(0.974 0.005 88);
+  --paper-2: oklch(0.946 0.007 88);
+  --ink: oklch(0.19 0.004 75);
+  --ink-2: oklch(0.42 0.009 75);
+  --rule: oklch(0.80 0.008 85);
+  --accent: oklch(0.42 0.23 268);
+  --accent-ink: oklch(0.995 0 0);
+}
+[data-theme='Newsprint'], [data-theme='newsprint'] {
+  color-scheme: light;
+  --paper: oklch(0.925 0.015 85);
+  --paper-2: oklch(0.89 0.015 85);
+  --ink: oklch(0.20 0.005 70);
+  --ink-2: oklch(0.38 0.009 70);
+  --rule: oklch(0.72 0.012 85);
+  --accent: oklch(0.43 0.22 266);
+  --accent-ink: oklch(0.99 0 0);
+}
+[data-theme='Ink'], [data-theme='ink'] {
+  color-scheme: dark;
+  --paper: oklch(0.19 0.004 75);
+  --paper-2: oklch(0.24 0.004 75);
+  --ink: oklch(0.965 0.006 85);
+  --ink-2: oklch(0.79 0.008 85);
+  --rule: oklch(0.39 0.006 85);
+  --accent: oklch(0.75 0.16 47);
+  --accent-ink: oklch(0.17 0.005 70);
+}
+[data-theme='Concrete'], [data-theme='concrete'] {
+  color-scheme: light;
+  --focus: 2px solid var(--ink);
+  --paper: oklch(0.80 0.003 90);
+  --paper-2: oklch(0.75 0.003 90);
+  --ink: oklch(0.15 0.002 90);
+  --ink-2: oklch(0.25 0.002 90);
+  --rule: oklch(0.60 0.003 90);
+  --accent: oklch(0.91 0.19 109);
+  --accent-ink: oklch(0.15 0.002 90);
+}
+[data-theme='Bauhaus'], [data-theme='bauhaus'] {
+  color-scheme: light;
+  --paper: oklch(0.995 0 0);
+  --paper-2: oklch(0.95 0 0);
+  --ink: oklch(0.14 0 0);
+  --ink-2: oklch(0.41 0 0);
+  --rule: oklch(0.78 0 0);
+  --accent: oklch(0.43 0.27 264);
+  --accent-ink: oklch(0.995 0 0);
+}
+[data-theme='Blueprint'], [data-theme='blueprint'] {
+  color-scheme: dark;
+  --paper: oklch(0.28 0.095 261);
+  --paper-2: oklch(0.32 0.095 261);
+  --ink: oklch(0.98 0.005 240);
+  --ink-2: oklch(0.81 0.025 240);
+  --rule: oklch(0.50 0.07 250);
+  --accent: oklch(0.85 0.12 198);
+  --accent-ink: oklch(0.20 0.06 260);
+}
+
+@media (max-width: 720px) {
+  :root { --columns: 4; --gutter: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-micro: 0ms; --dur-ui: 0ms; --dur-layout: 0ms; --dur-reveal: 0ms; --stagger: 0ms; }
+}
+[data-reduced-motion='true'] {
+  --dur-micro: 0ms; --dur-ui: 0ms; --dur-layout: 0ms; --dur-reveal: 0ms; --stagger: 0ms;
+}

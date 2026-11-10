@@ -1,0 +1,180 @@
+/* Moiré Field: scoped component styles. Import tokens.css once at your application root. */
+@layer hairline.base {
+  .hl-component {
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: var(--leading-body);
+    font-variant-numeric: tabular-nums;
+  }
+  .hl-component *,
+  .hl-component *::before,
+  .hl-component *::after {
+    box-sizing: border-box;
+  }
+  .hl-component button,
+  .hl-component input,
+  .hl-component select {
+    font: inherit;
+    color: inherit;
+    border-radius: var(--radius);
+  }
+  .hl-component button {
+    cursor: pointer;
+  }
+  .hl-component :focus-visible,
+  .hl-component:focus-visible {
+    outline: var(--focus);
+    outline-offset: var(--space-4);
+  }
+  .hl-component button:disabled,
+  .hl-component:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+  .hl-component .hl-mono {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+  }
+  .hl-component .hl-sr {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .hl-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-24);
+    min-block-size: var(--space-48);
+    padding: var(--space-12) var(--space-24);
+    border: var(--hairline) solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    font: var(--weight-medium) var(--text-sm)/var(--leading-body)
+      var(--font-sans);
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+      background var(--dur-ui),
+      color var(--dur-ui),
+      transform var(--dur-ui) var(--ease-out-expo);
+  }
+  .hl-button:focus-visible {
+    outline: var(--focus);
+    outline-offset: var(--space-4);
+  }
+  .hl-button:active {
+    transform: translateY(1px);
+  }
+  .hl-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .hl-button .hl-arrow {
+    font-size: var(--text-md);
+  }
+  .hl-panel {
+    inline-size: min(100%, 320px);
+    border: var(--hairline) solid var(--rule);
+    padding: var(--space-24);
+    background: var(--paper);
+  }
+  .hl-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-16);
+    border-block-end: var(--hairline) solid var(--rule);
+    padding-block: var(--space-8);
+  }
+  .hl-line:last-child {
+    border-block-end: 0;
+  }
+  .hl-line button {
+    min-block-size: var(--space-48);
+    border: 0;
+    background: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hl-component,
+    .hl-component *,
+    .hl-component *::before,
+    .hl-component *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  [data-reduced-motion="true"] .hl-component,
+  [data-reduced-motion="true"] .hl-component * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+.moire-component {
+  inline-size: 100%;
+  max-inline-size: 360px;
+}
+.moire-pattern {
+  position: relative;
+  block-size: 176px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.moire-layer {
+  position: absolute;
+  inset: -100%;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--ink) 0px,
+    var(--ink) 1px,
+    transparent 1px,
+    transparent 5px
+  );
+  opacity: 0.55;
+}
+.moire-layer.second {
+  transform: rotate(var(--moire-angle, 3deg)) scale(var(--moire-scale, 1));
+  transform-origin: center;
+  transition: transform var(--dur-ui) linear;
+}
+.moire-pattern::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: var(--hairline) solid var(--rule);
+}
+.moire-cross {
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: 50%;
+  transform: translate(-50%, -50%);
+  font-size: var(--text-xl);
+  line-height: 1;
+  color: var(--accent);
+  background: var(--paper);
+  padding: var(--space-4);
+}
+.moire-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+  margin-block-start: var(--space-12);
+}
+.moire-control label {
+  color: var(--ink-2);
+}
+.moire-control input {
+  flex: 1;
+  min-inline-size: 0;
+  accent-color: var(--ink);
+  block-size: var(--space-24);
+}
+
