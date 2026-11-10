@@ -7,6 +7,7 @@ import * as D from "./d";
 import * as E from "./e";
 import * as F from "./f";
 import * as G from "./g";
+import * as H from "./h";
 
 /** Mechanism library: one hand-built renderer per spec id. */
 export const DEMOS: Record<string, ComponentType<DemoProps>> = {
@@ -18,4 +19,6 @@ export const DEMOS: Record<string, ComponentType<DemoProps>> = {
   barograph: F.Barograph, "compass-bearing": F.CompassBearing, "moon-phase": F.MoonPhase, "composing-stick": F.ComposingStick, "kerning-pair": F.KerningPair, "width-axis": F.WidthAxis,
   "rubber-stamp": G.RubberStamp, "signal-lever": G.SignalLever, "plotter-sparkline": G.PlotterSparkline, "tally-counter": G.TallyCounter,
   "queue-ticket": G.QueueTicket, "postage-meter": G.PostageMeter, "safety-interlock": G.SafetyInterlock, "signal-lamp": G.SignalLamp,
+  "counting-preloader": H.CountingPreloader, "line-draw-loader": H.LineDrawLoader, "dot-wave-loader": H.DotWaveLoader, "clock-hand-loader": H.ClockHandLoader, "block-cursor-loader": H.BlockCursorLoader,
+  "sundial-clock": H.SundialClock, "star-chart": H.StarChart, "analog-clock": H.AnalogClock, "seven-segment": H.SevenSegment, stopwatch: H.Stopwatch, "ticker-clock": H.TickerClock, "film-leader": H.FilmLeader,
 };

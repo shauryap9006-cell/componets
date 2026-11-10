@@ -165,6 +165,30 @@ export function SplitFlap(p: DemoProps) {
     }), 42);
     return () => clearInterval(t);
   }, [target, n, p.reduced]);
+
+  if (p.v.style === "Clock") {
+    const pad = (num: number) => String(num).padStart(2, "0");
+    const d = new Date();
+    const clockText = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    return (
+      <div {...a.bind} tabIndex={0} role="img" aria-label={`Flip clock: ${clockText}`} className="flex flex-col items-center gap-2">
+        <span className="m soft flex w-full justify-between text-[10px]"><span>STATION FLIP-CLOCK</span><span>ZURICH</span></span>
+        <div data-part="1" className="flex items-center gap-1.5" dir="ltr">
+          {clockText.split("").map((ch, i) => (
+            ch === ":" ? (
+              <span key={i} className="font-mono text-2xl font-bold animate-pulse" aria-hidden>:</span>
+            ) : (
+              <span key={i} className="relative grid h-12 w-9 place-items-center overflow-hidden border border-ink bg-plate" style={bw}>
+                <span className="font-mono text-[26px] font-bold leading-none">{ch}</span>
+                <i className="absolute inset-x-0 top-1/2 bg-paper" style={{ height: "var(--ln)" }} />
+              </span>
+            )
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div {...a.bind} tabIndex={0} role="img" aria-label={`Departure board: ${target.trim()}`} className="flex flex-col items-start gap-2">
       <span className="m soft flex w-full justify-between"><span>Gleis 7</span><span>{String(wi % Math.max(1, words.length) + 1).padStart(2, "0")}/{String(words.length).padStart(2, "0")}</span></span>

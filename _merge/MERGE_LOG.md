@@ -78,4 +78,22 @@ Tracking log for components imported into main UI library from source folders.
 - **safety-interlock (Imported as New Plate)**: FIG. 044 in `src/kit/catalog3.ts` and `src/demos/g.tsx`. Industrial switch with hinged protective guard cover and arming mechanism.
 - **signal-lamp (Imported as New Plate)**: FIG. 045 in `src/kit/catalog3.ts` and `src/demos/g.tsx`. Multi-state railway semaphore arm and illuminated aspect indicator (Clear / Caution / Stop).
 
+---
+
+## Batch 2: Loaders & Time
+- **flip-clock (Added as Variant)**: Merged as `"Clock"` variant of FIG. 005 `split-flap` (Counters/Time). Renders split-flap station digital clock cards with pulsing separator colon.
+- **counting-preloader (Imported as New Plate)**: FIG. 046 in `src/kit/catalog3.ts` and `src/demos/h.tsx`. Digital tabular percentage counter with synchronized progress track.
+- **line-draw-loader (Imported as New Plate)**: FIG. 047 in `src/kit/catalog3.ts` and `src/demos/h.tsx`. Continuous rectangular SVG perimeter draw-in and draw-out without rewinding.
+- **dot-wave-loader (Imported as New Plate)**: FIG. 048 in `src/kit/catalog3.ts` and `src/demos/h.tsx`. Nine-node baseline wave with mathematical sine wave oscillation.
+- **clock-hand-loader (Imported as New Plate)**: FIG. 049 in `src/kit/catalog3.ts` and `src/demos/h.tsx`. Analog 12-step ticking railway pointer loader.
+- **block-cursor-loader (Imported as New Plate)**: FIG. 050 in `src/kit/catalog3.ts` and `src/demos/h.tsx`. Monospace terminal command loader with blinking 12×20 block cursor.
+- **sundial-clock (Imported as New Plate)**: FIG. 051 in `src/kit/catalog3.ts` and `src/demos/h.tsx`. Astronomical gnomon sun shadow clock with Roman numerals and UTC offset adjustment.
+- **star-chart (Imported as New Plate)**: FIG. 052 in `src/kit/catalog3.ts` and `src/demos/h.tsx`. Celestial rating chart with interactive connecting constellation vector lines.
+- **analog-clock (Imported as New Plate)**: FIG. 053 in `src/kit/catalog3.ts` and `src/demos/h.tsx`. Authentic Swiss station clock with baton indices, disc second hand, and 60-interval dial.
+- **seven-segment (Imported as New Plate)**: FIG. 054 in `src/kit/catalog3.ts` and `src/demos/h.tsx`. Retro LED digital indicator with genuine unlit ghost bar contrast.
+- **stopwatch (Imported as New Plate)**: FIG. 055 in `src/kit/catalog3.ts` and `src/demos/h.tsx`. Split-second mechanical chronograph with 60s central sweep and 30-min accumulator dial.
+- **ticker-clock (Imported as New Plate)**: FIG. 056 in `src/kit/catalog3.ts` and `src/demos/h.tsx`. Linear horizontal continuous time tape with center indicator needle.
+- **film-leader (Imported as New Plate)**: FIG. 057 in `src/kit/catalog3.ts` and `src/demos/h.tsx`. SMPTE universal cinema countdown leader with 360° sweeping optical radial arm.
+
+
 
