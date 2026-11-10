@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 180" width="100%" height="180" fill="none">
+  <defs>
+    <style>
+      .bg-card { fill: #111317; stroke: #23272e; stroke-width: 1px; }
+      .text-title { fill: #f3f4f6; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; font-weight: bold; letter-spacing: 0.1em; }
+      .text-muted { fill: #8892b0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; }
+      .wire-subtle { stroke: #2d333f; stroke-width: 1px; }
+      .acc { fill: #ef4444; stroke: #ef4444; }
+
+      @media (prefers-color-scheme: light) {
+        .bg-card { fill: #ffffff; stroke: #e2e8f0; }
+        .text-title { fill: #0f172a; }
+        .text-muted { fill: #64748b; }
+        .wire-subtle { stroke: #e2e8f0; }
+      }
+
+      @keyframes needleOscillate {
+        0%, 100% { transform: rotate(-35deg); }
+        50% { transform: rotate(38deg); }
+      }
+
+      @keyframes scanlineDrop {
+        0% { transform: translateY(0px); opacity: 0; }
+        20% { opacity: 0.9; }
+        80% { opacity: 0.9; }
+        100% { transform: translateY(80px); opacity: 0; }
+      }
+
+      @keyframes flipChar {
+        0%, 100% { transform: scaleY(1); }
+        50% { transform: scaleY(0.1); }
+      }
+
+      @keyframes toastUnroll {
+        0% { stroke-dashoffset: 0; }
+        100% { stroke-dashoffset: 400; }
+      }
+    </style>
+  </defs>
+
+  <!-- Panel 1: Split-Flap Dispatch (FIG. 005) -->
+  <g transform="translate(40, 20)">
+    <rect width="280" height="140" rx="6" class="bg-card" />
+    <text x="16" y="28" class="text-title">FIG. 005 · SPLIT-FLAP</text>
+    <text x="16" y="44" class="text-muted">MECHANICAL REEL FLAP DISPLAY</text>
+    <g transform="translate(16, 60)">
+      <!-- Flap Tiles -->
+      <g transform="translate(0, 0)">
+        <rect width="32" height="42" rx="3" fill="#1e2229" stroke="#333a47" stroke-width="1" />
+        <line x1="0" y1="21" x2="32" y2="21" stroke="#000" stroke-width="1" />
+        <text x="16" y="27" text-anchor="middle" fill="#fff" font-family="monospace" font-size="20" font-weight="bold" style="animation: flipChar 2.4s ease-in-out infinite;">Z</text>
+      </g>
+      <g transform="translate(38, 0)">
+        <rect width="32" height="42" rx="3" fill="#1e2229" stroke="#333a47" stroke-width="1" />
+        <line x1="0" y1="21" x2="32" y2="21" stroke="#000" stroke-width="1" />
+        <text x="16" y="27" text-anchor="middle" fill="#fff" font-family="monospace" font-size="20" font-weight="bold" style="animation: flipChar 2.4s ease-in-out 0.2s infinite;">U</text>
+      </g>
+      <g transform="translate(76, 0)">
+        <rect width="32" height="42" rx="3" fill="#1e2229" stroke="#333a47" stroke-width="1" />
+        <line x1="0" y1="21" x2="32" y2="21" stroke="#000" stroke-width="1" />
+        <text x="16" y="27" text-anchor="middle" fill="#fff" font-family="monospace" font-size="20" font-weight="bold" style="animation: flipChar 2.4s ease-in-out 0.4s infinite;">R</text>
+      </g>
+      <g transform="translate(114, 0)">
+        <rect width="32" height="42" rx="3" fill="#1e2229" stroke="#333a47" stroke-width="1" />
+        <line x1="0" y1="21" x2="32" y2="21" stroke="#000" stroke-width="1" />
+        <text x="16" y="27" text-anchor="middle" fill="#ef4444" font-family="monospace" font-size="20" font-weight="bold" style="animation: flipChar 2.4s ease-in-out 0.6s infinite;">4</text>
+      </g>
+    </g>
+    <text x="16" y="124" class="text-muted">TRACK 02 · PLATFORM B</text>
+  </g>
+
+  <!-- Panel 2: Needle Gauge (FIG. 017) -->
+  <g transform="translate(360, 20)" dir="ltr">
+    <rect width="280" height="140" rx="6" class="bg-card" />
+    <text x="16" y="28" class="text-title">FIG. 017 · NEEDLE GAUGE</text>
+    <text x="16" y="44" class="text-muted">120° DAMPED BALLISTIC ARC</text>
+    <g transform="translate(140, 105)">
+      <!-- Scale Arc -->
+      <path d="M-60 -25 A 65 65 0 0 1 60 -25" fill="none" stroke="#4b5563" stroke-width="1.5" />
+      <path d="M40 -48 A 65 65 0 0 1 60 -25" fill="none" stroke="#ef4444" stroke-width="3" />
+      <!-- Animated Oscillating Needle -->
+      <g style="animation: needleOscillate 3s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;">
+        <line x1="0" y1="4" x2="0" y2="-62" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round" />
+        <circle cx="0" cy="0" r="3.5" fill="#ef4444" />
+      </g>
+      <text x="0" y="20" text-anchor="middle" class="text-title">078.4 g</text>
+    </g>
+  </g>
+
+  <!-- Panel 3: Perimeter Countdown Toast (FIG. 107) -->
+  <g transform="translate(680, 20)">
+    <rect width="280" height="140" rx="6" class="bg-card" />
+    <text x="16" y="28" class="text-title">FIG. 107 · PERIMETER TOAST</text>
+    <text x="16" y="44" class="text-muted">CLOCKWISE SVG COUNTDOWN</text>
+    <!-- Toast notification mockup -->
+    <g transform="translate(16, 56)">
+      <rect width="248" height="52" rx="4" fill="#181b21" stroke="#2d333f" stroke-width="1" />
+      <!-- Animated Perimeter Unroll -->
+      <rect width="248" height="52" rx="4" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="400" style="animation: toastUnroll 4s linear infinite;" />
+      <text x="14" y="24" fill="#f3f4f6" font-family="monospace" font-size="10" font-weight="bold">DISPATCH LOGGED IN ARCHIVE</text>
+      <text x="14" y="38" class="text-muted">AUTO-EXPIRING · ZERO REGRESSION</text>
+    </g>
+    <text x="16" y="128" class="text-muted">EPHEMERAL HAIRLINE WRAPPER</text>
+  </g>
+</svg>
