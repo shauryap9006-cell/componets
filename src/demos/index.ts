@@ -6,6 +6,7 @@ import * as C from "./c";
 import * as D from "./d";
 import * as E from "./e";
 import * as F from "./f";
+import * as G from "./g";
 
 /** Mechanism library: one hand-built renderer per spec id. */
 export const DEMOS: Record<string, ComponentType<DemoProps>> = {
@@ -15,4 +16,5 @@ export const DEMOS: Record<string, ComponentType<DemoProps>> = {
   "index-drawer": D.IndexDrawer, "due-date-slip": D.DueDateSlip, "dotted-leader": D.DottedLeader, "elastic-rule": D.ElasticRule, annunciator: D.Annunciator, odometer: D.Odometer,
   fader: E.Fader, metronome: E.Metronome, "step-sequencer": E.StepSequencer, "comb-field": E.CombField, "barcode-scan": E.BarcodeScan, "strike-out": E.StrikeOut,
   barograph: F.Barograph, "compass-bearing": F.CompassBearing, "moon-phase": F.MoonPhase, "composing-stick": F.ComposingStick, "kerning-pair": F.KerningPair, "width-axis": F.WidthAxis,
+  "rubber-stamp": G.RubberStamp, "signal-lever": G.SignalLever, "plotter-sparkline": G.PlotterSparkline, "tally-counter": G.TallyCounter,
 };

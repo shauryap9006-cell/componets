@@ -1,9 +1,10 @@
 import { site } from "@/site.config";
 import { CATALOG_1 } from "./catalog1";
 import { CATALOG_2 } from "./catalog2";
+import { CATALOG_3 } from "./catalog3";
 import type { ComponentSpec } from "./spec";
 
-export const CATALOG: ComponentSpec[] = [...CATALOG_1, ...CATALOG_2];
+export const CATALOG: ComponentSpec[] = [...CATALOG_1, ...CATALOG_2, ...CATALOG_3];
 export const byId = (id: string) => CATALOG.find((s) => s.id === id);
 export const neighbours = (id: string) => { const i = CATALOG.findIndex((s) => s.id === id), n = CATALOG.length; return { prev: CATALOG[(i - 1 + n) % n], next: CATALOG[(i + 1) % n] }; };
 export const TAGS = Array.from(new Set(CATALOG.flatMap((s) => s.tags))).sort();

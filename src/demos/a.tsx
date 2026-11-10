@@ -12,6 +12,28 @@ export function PerforatedTear(p: DemoProps) {
   const [torn, setTorn] = useState(false);
   const gone = torn || a.sig || p.moment === "done";
   const teeth = Number(p.v.teeth);
+
+  if (p.v.style === "Ticket") {
+    const venue = String(p.v.venue ?? "HALL B · ROW 07");
+    const after = String(p.v.after ?? "Admitted");
+    const label = String(p.v.label ?? "Admit one");
+    return (
+      <button {...a.bind} onClick={() => setTorn((t) => !t)} aria-pressed={gone} aria-label={`${label}. Tear stub to confirm.`} className="relative flex h-[88px] items-stretch text-left">
+        <span data-part="1" className="flex w-48 flex-col justify-between border border-r-0 border-ink p-3" style={bw}>
+          <span className="m soft truncate text-[10px]">{venue}</span>
+          <span data-part="2" className="max-w-full truncate text-[18px] font-semibold tracking-tight">{gone ? after : label}</span>
+          <span className="m soft text-[10px]">№ 004021 · ADMIT 1</span>
+        </span>
+        <span data-part="3" className="flex flex-col justify-between py-[4px]" aria-hidden>
+          {Array.from({ length: Math.max(4, teeth) }, (_, i) => <i key={i} className="block size-[3px] rounded-full bg-ink" style={{ opacity: gone ? 0.25 : 1 }} />)}
+        </span>
+        <span data-part="4" className="tr grid w-16 origin-bottom-left place-items-center border border-l-0 border-ink" style={{ ...bw, transitionDuration: d(480), transform: gone ? "translate(32px, 20px) rotate(14deg)" : a.over ? "translateX(4px)" : "none", opacity: gone ? 0 : 1, color: a.over ? "var(--acc)" : undefined }}>
+          <span className="m text-[10px]" style={{ writingMode: "vertical-rl" }}>{gone ? "TORN" : `${String(p.v.stub ?? "TEAR")} →`}</span>
+        </span>
+      </button>
+    );
+  }
+
   return (
     <button {...a.bind} onClick={() => setTorn((t) => !t)} aria-pressed={gone} aria-label={`${p.v.label}. Tear to confirm.`} className="relative flex h-[72px] items-stretch text-left">
       <span data-part="1" className="flex w-44 flex-col justify-center border border-r-0 border-ink px-4" style={bw}>

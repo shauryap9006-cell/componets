@@ -5,13 +5,15 @@ import { clampPatch, fig } from "@/kit/spec";
 import { site } from "@/site.config";
 
 export const dynamic = "force-dynamic";
-const FILES = ["a", "b", "c", "d", "e", "f"];
+const FILES = ["a", "b", "c", "d", "e", "f", "g"];
 
 async function source(slug: string) {
   const dir = path.join(process.cwd(), "src");
   for (const f of FILES) {
     const txt = await fs.readFile(path.join(dir, "demos", `${f}.tsx`), "utf8").catch(() => "");
-    const at = txt.indexOf(`// @plate ${slug}\n`); if (at < 0) continue;
+    let at = txt.indexOf(`// @plate ${slug}\n`);
+    if (at < 0) at = txt.indexOf(`// @plate ${slug}\r\n`);
+    if (at < 0) continue;
     const next = txt.indexOf("// @plate ", at + 10);
     const body = txt.slice(at, next < 0 ? undefined : next).trim();
     const pre = txt.slice(0, txt.indexOf("// @plate ")).trim();
