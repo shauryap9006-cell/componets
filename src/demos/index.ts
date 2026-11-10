@@ -10,6 +10,7 @@ import * as G from "./g";
 import * as H from "./h";
 import * as I from "./i";
 import * as J from "./j";
+import * as K from "./k";
 
 /** Mechanism library: one hand-built renderer per spec id. */
 export const DEMOS: Record<string, ComponentType<DemoProps>> = {
@@ -27,4 +28,6 @@ export const DEMOS: Record<string, ComponentType<DemoProps>> = {
   "scramble-decode": J.ScrambleDecode, "rolling-numerals": J.RollingNumerals, "outline-numerals": J.OutlineNumerals, "running-head": J.RunningHead, "ticker-tape": J.TickerTape, "kerning-rope": J.KerningRope, "redline-diff": J.RedlineDiff, "misregistration-text": J.MisregistrationText, sparkwords: J.Sparkwords, "type-on-grid": J.TypeOnGrid,
   "dither-image": J.DitherImage, "ascii-image": J.AsciiImage, "scan-line-reveal": J.ScanLineReveal, "before-after": J.BeforeAfter, "waveform-player": J.WaveformPlayer, "perforated-frame": J.PerforatedFrame, "small-multiples": J.SmallMultiples, "risograph-image": J.RisographImage,
   letterpress: J.Letterpress, "crop-frame": J.CropFrame, "tear-card": J.TearCard, dossier: J.Dossier, "aperture-tip": J.ApertureTip, "declaration-dialog": J.DeclarationDialog,
+  "heatmap-calendar": K.HeatmapCalendar, "typographic-bars": K.TypographicBars, "line-chart-scrub": K.LineChartScrub, "radial-tick-gauge": K.RadialTickGauge, "dumbbell-chart": K.DumbbellChart, "hairline-treemap": K.HairlineTreemap, "ribbon-flow": K.RibbonFlow, "leaderboard-flip": K.LeaderboardFlip, "live-ticker-table": K.LiveTickerTable, "hatching-chart": K.HatchingChart, "isometric-stack": K.IsometricStack, "bullet-graph": K.BulletGraph, slopegraph: K.Slopegraph,
+  "bauhaus-generator": K.BauhausGenerator, "flow-field": K.FlowField, seismograph: K.Seismograph, "vu-meter": K.VuMeter, "punch-card": K.PunchCard, "countdown-toast": K.CountdownToast,
 };

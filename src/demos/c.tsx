@@ -124,16 +124,23 @@ export function NeedleGauge(p: DemoProps) {
   const [peak, setPeak] = useState(false);
   useEffect(() => { if (!a.sig) return; setPeak(true); const t = setTimeout(() => setPeak(false), 700); return () => clearTimeout(t); }, [a.sig]);
   const load = peak ? 100 : Number(p.v.load), n = Number(p.v.ticks), ang = -60 + (load / 100) * 120;
+  const isDual = p.v.style === "Dual";
+  const refAng = -60 + (65 / 100) * 120;
   return (
     <div {...a.bind} tabIndex={0} role="meter" aria-valuenow={load} aria-valuemin={0} aria-valuemax={100} aria-label={`Load in ${p.v.unit}`} className="flex flex-col items-center gap-1" dir="ltr">
       <svg width="200" height="112" viewBox="-100 -100 200 112">
         <path data-part="1" className="ln" d="M-77.9 -45 A90 90 0 0 1 77.9 -45" />
         <g data-part="2" className="soft">{Array.from({ length: n + 1 }, (_, i) => { const t = ((-60 + (i / n) * 120 - 90) * Math.PI) / 180, l = i % 5 === 0 ? 12 : 6; return <path key={i} className="ln" d={`M${Math.cos(t) * 90} ${Math.sin(t) * 90} L${Math.cos(t) * (90 - l)} ${Math.sin(t) * (90 - l)}`} />; })}</g>
         <path className="ln" stroke="var(--acc)" style={{ stroke: "var(--acc)", strokeWidth: "calc(var(--ln) * 3)" }} d="M59 -68 A90 90 0 0 1 77.9 -45" />
+        {isDual && (
+          <g style={{ transform: `rotate(${refAng}deg)` }} className="opacity-40">
+            <path className="ln" strokeDasharray="3 3" d="M0 6 V-84" />
+          </g>
+        )}
         <g data-part="3" style={{ transform: `rotate(${ang}deg)`, transition: `transform ${d(peak ? 480 : 900)} var(--ez)`, color: a.over ? "var(--acc)" : undefined }}><path className="ln" d="M0 6 V-84" /><circle r="4" fill="currentColor" /></g>
         <text x="-86" y="-22" className="m soft" fill="currentColor">0</text><text x="86" y="-22" textAnchor="end" className="m soft" fill="currentColor">MAX</text>
       </svg>
-      <span data-part="4" className="m">{String(Math.round(load * 4.2)).padStart(3, "0")} {String(p.v.unit).slice(0, 4)} <span className="soft">· settles before reading</span></span>
+      <span data-part="4" className="m">{String(Math.round(load * 4.2)).padStart(3, "0")} {String(p.v.unit).slice(0, 4)} <span className="soft">· {isDual ? "Dual differential comparison" : "settles before reading"}</span></span>
     </div>
   );
 }

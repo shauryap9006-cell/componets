@@ -119,25 +119,27 @@ export function ElasticRule(p: DemoProps) {
 // @plate annunciator
 export function Annunciator(p: DemoProps) {
   const a = useAct(p, 2400);
-  const names = list(p.v.labels, /;/).slice(0, 6), seed = Number(p.v.seed);
-  const [alarm, setAlarm] = useState(seed % 6), [ack, setAck] = useState(false);
+  const isMatrix = p.v.style === "Matrix";
+  const defaultList = isMatrix ? "C1;C2;C3;C4;C5;C6;C7;C8;C9;C10;C11;C12;C13;C14;C15;C16" : "Pump A;Valve 2;Temp;Flow;Level;Door";
+  const names = list(p.v.labels || defaultList, /;/).slice(0, isMatrix ? 16 : 6), seed = Number(p.v.seed);
+  const [alarm, setAlarm] = useState(seed % names.length), [ack, setAck] = useState(false);
   useEffect(() => { if (a.sig) { setAlarm((x) => (x + 1 + (seed % 4)) % Math.max(1, names.length)); setAck(false); } }, [a.sig, seed, names.length]);
   const acked = ack || p.moment === "done";
   return (
     <div {...a.bind} className="flex w-[232px] flex-col gap-2">
-      <div data-part="1" className="grid grid-cols-3 border-l border-t border-ink" style={{ borderWidth: "var(--ln) 0 0 var(--ln)" }}>
+      <div data-part="1" className={`grid border-l border-t border-ink ${isMatrix ? "grid-cols-4" : "grid-cols-3"}`} style={{ borderWidth: "var(--ln) 0 0 var(--ln)" }}>
         {names.map((nm, i) => {
           const hot = i === alarm % names.length;
           return (
             <button key={i} data-part={hot ? "2" : undefined} disabled={!hot} onClick={() => setAck(true)} aria-label={hot ? `${nm}: alarm. ${acked ? "Acknowledged" : "Press to acknowledge"}` : `${nm}: normal`}
-              className={`m relative grid h-11 place-items-center border-b border-r border-ink px-1 disabled:opacity-100 ${hot && acked ? "hatch" : ""}`}
+              className={`m relative grid place-items-center border-b border-r border-ink px-1 disabled:opacity-100 ${isMatrix ? "h-7 text-[9px]" : "h-11"} ${hot && acked ? "hatch" : ""}`}
               style={{ borderWidth: "0 var(--ln) var(--ln) 0", background: hot && !acked ? "var(--acc)" : undefined, color: hot && !acked ? "var(--on-accent)" : hot ? undefined : "color-mix(in oklch, var(--ink) var(--soft), transparent)", animation: hot && !acked && !p.reduced ? "blink 1.2s steps(2) infinite" : "none" }}>
               <span className="truncate">{nm}</span>
             </button>
           );
         })}
       </div>
-      <span data-part="3" className="m flex justify-between"><span className="soft">{acked ? "Acknowledged · logged" : "1 unacknowledged"}</span><span>{acked ? "ACK ✓" : "Press cell"}</span></span>
+      <span data-part="3" className="m flex justify-between"><span className="soft">{acked ? "Acknowledged · logged" : "1 unacknowledged"}</span><span>{isMatrix ? "4×4 Matrix" : (acked ? "ACK ✓" : "Press cell")}</span></span>
     </div>
   );
 }

@@ -10,23 +10,27 @@ const d = (ms: number) => `calc(${ms}ms * var(--sp))`;
 export function Barograph(p: DemoProps) {
   const a = useAct(p, 3000);
   const seed = Number(p.v.seed), days = Number(p.v.days), W = 224, H = 84;
+  const isDrum = p.v.style === "Drum";
   const { path, last } = useMemo(() => {
     const r = rng(seed); let y = 0.5; const pts: number[] = [];
     for (let i = 0; i <= 48; i++) { y = Math.min(0.92, Math.max(0.08, y + (r() - 0.5) * 0.16)); pts.push(y); }
     return { path: pts.map((v, i) => `${i ? "L" : "M"}${((i / 48) * W).toFixed(1)} ${(v * H).toFixed(1)}`).join(" "), last: pts[48] };
-  }, [seed]);
+  }, [seed, W, H]);
   return (
     <div {...a.bind} tabIndex={0} role="img" aria-label={`Pressure trace over ${days} days, now ${Math.round(1030 - last * 50)} hectopascals`} className="flex flex-col gap-2" dir="ltr">
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
         <g data-part="1" className="soft">
-          <rect width={W} height={H} className="ln" />
+          <rect width={W} height={H} className="ln" rx={isDrum ? 6 : 0} />
+          {isDrum && (
+            <ellipse cx={W / 2} cy="0" rx={W / 2} ry="6" className="ln" fill="none" opacity="0.3" />
+          )}
           {Array.from({ length: days - 1 }, (_, i) => <path key={i} className="ln" d={`M${((i + 1) / days) * W} 0 V${H}`} strokeDasharray="2 3" />)}
           {[0.25, 0.5, 0.75].map((y) => <path key={y} className="ln" d={`M0 ${y * H} H${W}`} strokeDasharray="1 5" />)}
         </g>
         <path data-part="2" key={a.over ? "run" : "rest"} className="ln" d={path} pathLength={1} strokeDasharray={1} style={{ stroke: "var(--acc)", strokeWidth: "calc(var(--ln) * 1.5)", ["--len" as string]: 1, animation: a.over && !p.reduced ? `drawIn ${d(2200)} linear both` : "none" }} />
         <g data-part="3"><path className="ln" d={`M${W} ${last * H} h14 v-${last * H + 6}`} /><circle cx={W} cy={last * H} r="2.5" fill="currentColor" /></g>
       </svg>
-      <span data-part="4" className="m flex justify-between"><span className="soft">Seed {String(seed).padStart(3, "0")} · {days} days</span><span>{Math.round(1030 - last * 50)} hPa {last < 0.5 ? "↑" : "↓"}</span></span>
+      <span data-part="4" className="m flex justify-between"><span className="soft">{isDrum ? "Cylindrical Drum" : `Seed ${String(seed).padStart(3, "0")}`} · {days} days</span><span>{Math.round(1030 - last * 50)} hPa {last < 0.5 ? "↑" : "↓"}</span></span>
     </div>
   );
 }

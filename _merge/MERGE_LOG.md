@@ -144,6 +144,33 @@ Tracking log for components imported into main UI library from source folders.
 - **aperture-tip (Imported as New Plate)**: FIG. 087 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Optical camera iris tooltip rotating diaphragm leaves open to frame contextual annotation.
 - **declaration-dialog (Imported as New Plate)**: FIG. 088 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Customs clearance modal dialog with itemized manifest and authorization stamp.
 
+---
+
+## Batch 5: Data, Generative & Overlays
+- **gauge-dual (Added as Variant)**: Merged as `"Dual"` variant of FIG. 017 `needle-gauge` (Indicators). Dual differential comparator needle on common 120° graduation arc.
+- **alarm-matrix (Added as Variant)**: Merged as `"Matrix"` variant of FIG. 023 `annunciator` (Feedback). 4x4 high-density circuit status board with 16 square annunciator windows.
+- **barograph-drum (Added as Variant)**: Merged as `"Drum"` variant of FIG. 031 `barograph` (Data). Rotating cylindrical clockwork drum recorder with curved cylinder perspective lines.
+- **heatmap-calendar (Imported as New Plate)**: FIG. 089 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. 7x14 weekly density matrix mapping activity levels to tonal ink cells.
+- **typographic-bars (Imported as New Plate)**: FIG. 090 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. Swiss typographic bar chart where category labels and values physically define bar lengths.
+- **line-chart-scrub (Imported as New Plate)**: FIG. 091 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. Drafting trendline with interactive vertical scrubber and coordinate readout.
+- **radial-tick-gauge (Imported as New Plate)**: FIG. 092 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. 270-degree circular tachometer with fine radial graduations and redline zone.
+- **dumbbell-chart (Imported as New Plate)**: FIG. 093 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. Multi-row dumbbell range comparison chart comparing baseline and target metrics.
+- **hairline-treemap (Imported as New Plate)**: FIG. 094 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. Swiss architectural treemap with proportional area boxes bounded by hairline rules.
+- **ribbon-flow (Imported as New Plate)**: FIG. 095 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. Alluvial flow diagram connecting input volume to output allocations via curved ribbons.
+- **leaderboard-flip (Imported as New Plate)**: FIG. 096 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. Mechanical split-flap rankings board with vertical order transitions and position deltas.
+- **live-ticker-table (Imported as New Plate)**: FIG. 097 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. Currency exchange rate table with live quote updating and delta color flashes.
+- **hatching-chart (Imported as New Plate)**: FIG. 098 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. Column bar chart distinguished entirely by mechanical diagonal hatching angles.
+- **isometric-stack (Imported as New Plate)**: FIG. 099 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. 30-degree axonometric data stack displaying layered planar data tiers.
+- **bullet-graph (Imported as New Plate)**: FIG. 100 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. Stephen Few bullet graph displaying actual performance against comparative targets.
+- **slopegraph (Imported as New Plate)**: FIG. 101 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. Dual-axis slope comparison chart mapping trajectories between two historical moments.
+- **bauhaus-generator (Imported as New Plate)**: FIG. 102 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. Algorithmic geometric composition generator balancing fundamental Bauhaus forms.
+- **flow-field (Imported as New Plate)**: FIG. 103 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. Vector wind field where flowing particle streamlines follow mathematical force curves.
+- **seismograph (Imported as New Plate)**: FIG. 104 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. Revolving drum seismograph recording seismic tremors with vibrating ink needle.
+- **vu-meter (Imported as New Plate)**: FIG. 105 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. ANSI ballistic audio VU meter with damped needle swing and redline zone.
+- **punch-card (Imported as New Plate)**: FIG. 106 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. 80-column Hollerith punched card with rectangular data hole patterns.
+- **countdown-toast (Imported as New Plate)**: FIG. 107 in `src/kit/catalog3.ts` and `src/demos/k.tsx`. Ephemeral notification toast with continuous perimeter hairline countdown border.
+
+
 
 
 
