@@ -477,3 +477,350 @@ export function TallyCounter(p: DemoProps) {
     </button>
   );
 }
+
+// @plate queue-ticket
+export function QueueTicket(p: DemoProps) {
+  const a = useAct(p, 2200);
+  const pre = String(p.v.prefix ?? "A");
+  const [numVal, setNumVal] = useState(Math.round(Number(p.v.start ?? 41)));
+  const [dispensed, setDispensed] = useState(false);
+  const lag = Math.round(Number(p.v.lag ?? 3));
+  const serving = Math.max(1, numVal - lag);
+
+  const pull = () => {
+    if (p.moment === "off" || p.moment === "problem") return;
+    setDispensed(false);
+    setTimeout(() => {
+      setNumVal((x) => x + 1);
+      setDispensed(true);
+    }, 140);
+  };
+
+  const isDone = a.sig || p.moment === "done";
+  const peek = p.moment === "pressed" ? 28 : a.over && !dispensed ? 10 : dispensed || isDone ? 54 : 0;
+
+  return (
+    <div
+      {...a.bind}
+      className="flex items-start gap-5 text-left"
+      style={{ opacity: p.moment === "off" ? 0.35 : 1 }}
+    >
+      <div className="relative w-[136px]">
+        <button
+          type="button"
+          disabled={p.moment === "off"}
+          aria-label={`Take a number. Next is ${pre}${numVal + 1}`}
+          onClick={pull}
+          data-part="1"
+          className="relative z-10 flex h-16 w-[136px] flex-col justify-between border border-ink bg-paper p-2.5 text-left"
+          style={bw}
+        >
+          <span className="m text-[11px] font-medium">{String(p.v.label ?? "Take a number")}</span>
+          <span
+            aria-hidden
+            className="block h-1 border-y border-ink"
+            style={{ borderWidth: "var(--ln)" }}
+          />
+        </button>
+
+        <div
+          data-part="2"
+          aria-live="polite"
+          className="tr absolute inset-x-3.5 top-[56px] flex h-[60px] items-center justify-center border border-ink bg-plate"
+          style={{
+            ...bw,
+            transitionDuration: d(480),
+            transform: `translateY(${peek - 54}px)`,
+          }}
+        >
+          <span className="font-mono text-[24px] font-bold">
+            {p.moment === "problem" ? "—" : `${pre}${String(numVal).padStart(2, "0")}`}
+          </span>
+        </div>
+      </div>
+
+      <div
+        data-part="3"
+        className="flex flex-col border-l border-ink/30 pl-4 text-left"
+      >
+        <span className="m soft text-[10px] tracking-wider">NOW SERVING</span>
+        <strong
+          className="font-mono text-[30px] font-bold leading-none tracking-tight"
+          style={{ color: isDone ? "var(--acc)" : undefined }}
+        >
+          {p.moment === "busy" ? "· ·" : `${pre}${String(isDone ? numVal : serving).padStart(2, "0")}`}
+        </strong>
+        <span
+          className="m mt-1 text-[10px] tracking-wider"
+          style={{ color: p.moment === "problem" ? "var(--acc)" : undefined }}
+        >
+          {p.moment === "problem"
+            ? "OUT OF PAPER"
+            : isDone
+            ? "PLEASE COME UP"
+            : `${Math.max(0, numVal - serving)} AHEAD`}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// @plate postage-meter
+function DrumDigit({ digit, speed }: { digit: number; speed: string }) {
+  return (
+    <span className="inline-block h-[1em] overflow-hidden leading-none">
+      <span
+        className="flex flex-col transition-transform duration-300"
+        style={{
+          transform: `translateY(${-digit}em)`,
+          transitionTimingFunction: "var(--ez)",
+          transitionDuration: speed,
+        }}
+      >
+        {Array.from({ length: 10 }, (_, i) => (
+          <span key={i} className="h-[1em] text-center">
+            {i}
+          </span>
+        ))}
+      </span>
+    </span>
+  );
+}
+
+export function PostageMeter(p: DemoProps) {
+  const a = useAct(p, 1800);
+  const step = Number(p.v.step ?? 0.05);
+  const max = Number(p.v.max ?? 9.99);
+  const digits = Math.max(3, Math.min(6, Math.round(Number(p.v.digits ?? 4))));
+  const [val, setVal] = useState(Number(p.v.value ?? 0.85));
+
+  const change = (delta: number) => {
+    if (p.moment === "off") return;
+    setVal((v) => Math.max(0, Math.min(max * 1.5, Math.round((v + delta) * 100) / 100)));
+  };
+
+  const isOver = val > max || p.moment === "problem";
+  const isDone = a.sig || p.moment === "done";
+  const numInt = Math.round(val * 100);
+  const ds = String(numInt % 10 ** digits)
+    .padStart(digits, "0")
+    .split("")
+    .map(Number);
+
+  return (
+    <div
+      {...a.bind}
+      role="spinbutton"
+      tabIndex={0}
+      aria-valuenow={val}
+      aria-valuemin={0}
+      aria-valuemax={max}
+      aria-label={String(p.v.label ?? "Postage")}
+      onKeyDown={(e) => {
+        const mul = e.shiftKey ? 10 : 1;
+        if (e.key === "ArrowUp" || e.key === "ArrowRight") {
+          e.preventDefault();
+          change(step * mul);
+        }
+        if (e.key === "ArrowDown" || e.key === "ArrowLeft") {
+          e.preventDefault();
+          change(-step * mul);
+        }
+        if (e.key === "Home") {
+          e.preventDefault();
+          setVal(0);
+        }
+      }}
+      className="inline-flex items-stretch text-left"
+      style={{ opacity: p.moment === "off" ? 0.35 : 1 }}
+    >
+      <button
+        type="button"
+        data-part="1"
+        disabled={p.moment === "off"}
+        onClick={() => change(-step)}
+        className="flex w-10 items-center justify-center border border-r-0 border-ink bg-paper text-[18px]"
+        style={bw}
+      >
+        −
+      </button>
+
+      <div
+        data-part="2"
+        className="flex min-w-[150px] flex-col justify-between border border-ink bg-paper p-2.5"
+        style={{
+          ...bw,
+          borderColor: isOver ? "var(--acc)" : undefined,
+        }}
+      >
+        <div className="m flex justify-between text-[10px]">
+          <span className="font-medium">{String(p.v.label ?? "Postage")}</span>
+          <span style={{ color: isOver ? "var(--acc)" : undefined }}>
+            {isOver ? "OVER" : isDone ? "PAID ✓" : `±${step.toFixed(2)}`}
+          </span>
+        </div>
+
+        <div className="font-mono mt-1 flex items-baseline gap-0.5 text-[30px] font-bold leading-none">
+          <span className="mr-1 text-[16px] font-normal">{String(p.v.currency ?? "£")}</span>
+          {ds.map((dVal, i) => (
+            <span key={i} className="contents">
+              {i === digits - 2 && <span>.</span>}
+              <DrumDigit digit={dVal} speed={d(320)} />
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <button
+        type="button"
+        data-part="3"
+        disabled={p.moment === "off"}
+        onClick={() => change(step)}
+        className="flex w-10 items-center justify-center border border-l-0 border-ink bg-paper text-[18px]"
+        style={bw}
+      >
+        +
+      </button>
+    </div>
+  );
+}
+
+// @plate safety-interlock
+export function SafetyInterlock(p: DemoProps) {
+  const a = useAct(p, 2000);
+  const [armed, setArmed] = useState(Boolean(p.v.armed));
+  const [on, setOn] = useState(false);
+
+  const isLive = on || a.sig || p.moment === "done";
+  const isArmed = armed || isLive;
+
+  return (
+    <div
+      {...a.bind}
+      data-part="1"
+      className="inline-flex items-center gap-5 border border-ink bg-paper p-3 text-left"
+      style={{
+        ...bw,
+        opacity: p.moment === "off" ? 0.35 : 1,
+      }}
+    >
+      <button
+        type="button"
+        data-part="2"
+        disabled={p.moment === "off"}
+        aria-pressed={isArmed}
+        onClick={() => {
+          setArmed((prev) => !prev);
+          if (isArmed) setOn(false);
+        }}
+        className="flex flex-col items-center gap-1.5"
+      >
+        <span
+          className="tr block origin-bottom border border-b-0 border-ink bg-plate"
+          style={{
+            width: 38,
+            height: 24,
+            borderWidth: "var(--ln)",
+            transform: isArmed ? "rotateX(70deg)" : "none",
+            transitionDuration: d(320),
+          }}
+        />
+        <span className="m text-[9px] tracking-wider text-ink/70">
+          {isArmed ? "GUARD UP" : "GUARD"}
+        </span>
+      </button>
+
+      <button
+        type="button"
+        data-part="3"
+        role="switch"
+        aria-checked={isLive}
+        disabled={p.moment === "off" || !isArmed}
+        onClick={() => setOn((prev) => !prev)}
+        className="flex flex-col items-center gap-1.5 disabled:opacity-40"
+      >
+        <span
+          className="relative block border border-ink bg-paper"
+          style={{ width: 40, height: 24, borderWidth: "var(--ln)" }}
+        >
+          <span
+            className="tr absolute bottom-0 top-0"
+            style={{
+              left: isLive ? 20 : 0,
+              width: 18,
+              background: isLive ? "var(--acc)" : "var(--ink)",
+              transitionDuration: d(240),
+            }}
+          />
+        </span>
+        <span className="m text-[9px] font-semibold tracking-wider">
+          {isLive ? String(p.v.onWord ?? "LIVE") : String(p.v.offWord ?? "SAFE")}
+        </span>
+      </button>
+    </div>
+  );
+}
+
+// @plate signal-lamp
+export function SignalLamp(p: DemoProps) {
+  const a = useAct(p, 1600);
+  const rawStatus = String(p.v.status ?? "CLEAR").toUpperCase();
+  const [aspect, setAspect] = useState(rawStatus);
+
+  const active = p.moment === "problem" ? "STOP" : p.moment === "busy" ? "CAUTION" : a.sig || p.moment === "done" ? "CLEAR" : aspect;
+  const ang = active === "STOP" ? 0 : active === "CAUTION" ? -45 : -90;
+
+  const cycle = () => {
+    if (p.moment === "off") return;
+    setAspect((cur) => (cur === "CLEAR" ? "CAUTION" : cur === "CAUTION" ? "STOP" : "CLEAR"));
+  };
+
+  return (
+    <button
+      {...a.bind}
+      type="button"
+      role="status"
+      disabled={p.moment === "off"}
+      onClick={cycle}
+      onKeyDown={(e) => {
+        if (e.key === " " || e.key === "Enter") cycle();
+      }}
+      className="inline-flex items-center gap-4 bg-transparent p-2 text-left"
+      style={{ opacity: p.moment === "off" ? 0.35 : 1 }}
+    >
+      <div data-part="1" className="relative h-12 w-6">
+        <span
+          className="absolute bottom-0 left-1/2 top-0 -translate-x-1/2 bg-ink"
+          style={{ width: "var(--ln)" }}
+        />
+        <span
+          data-part="2"
+          className="tr absolute left-1/2 top-2 origin-left"
+          style={{
+            width: 22,
+            height: "calc(var(--ln) * 3)",
+            background: active === "STOP" ? "var(--acc)" : "var(--ink)",
+            transform: `rotate(${ang}deg)`,
+            transitionDuration: d(320),
+          }}
+        />
+        <span
+          className="tr absolute left-1/2 top-2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-ink"
+          style={{
+            background: active === "STOP" ? "var(--acc)" : "var(--paper)",
+          }}
+        />
+      </div>
+
+      <div data-part="3" className="flex flex-col">
+        <span className="m soft text-[9px] tracking-wider">{String(p.v.label ?? "Line status")}</span>
+        <strong
+          className="text-[17px] font-bold tracking-tight"
+          style={{ color: active === "STOP" ? "var(--acc)" : undefined }}
+        >
+          {active}
+        </strong>
+      </div>
+    </button>
+  );
+}

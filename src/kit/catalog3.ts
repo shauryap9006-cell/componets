@@ -1,7 +1,7 @@
 import { B, C, R, T, mk, type ComponentSpec, type Part } from "./spec";
 
 const P = (n: number, name: string, role: string, ...loupe: string[]): Part => ({ n, name, role, loupe });
-const RW = "Railway", DO = "Drawing Office", CR = "Control Room", CB = "Customs & Bureaucracy";
+const RW = "Railway", DO = "Drawing Office", CR = "Control Room", CB = "Customs & Bureaucracy", PO = "Post Office";
 
 export const CATALOG_3: ComponentSpec[] = [
   mk(38, {
@@ -152,5 +152,147 @@ export const CATALOG_3: ComponentSpec[] = [
       { cls: "e", text: "Plus (+) key adds a mark; Minus (-) or Backspace removes one." },
     ],
     signature: { name: "Mark strikes the gate", ms: 1600 },
+  }),
+  mk(42, {
+    id: "queue-ticket",
+    name: "Take a Number",
+    category: "Buttons",
+    world: CB,
+    verb: "dispense",
+    kind: "theatre",
+    uncommon: true,
+    motion: "active",
+    tags: ["ticket", "queue", "dispenser", "number"],
+    tagline: "PLEASE WAIT TO BE CALLED.",
+    description: "Pull a ticket. The display tells you how long.",
+    pitch: "A take-a-number dispenser for joining queues. Pressing pulls a slip from the slot, updates the ticket serial, and reports how many patrons wait ahead.",
+    parts: [
+      P(1, "Dispenser", "Main body and slot", "label", "line", "corners"),
+      P(2, "Ticket", "Dispensed paper strip", "prefix", "start", "speed", "feel"),
+      P(3, "Serving", "Display readout", "lag", "accent"),
+    ],
+    settings: [
+      T("label", "Dispenser text", "Take a number"),
+      T("prefix", "Prefix", "A"),
+      R("start", "Start number", 1, 98, 41, "Initial ticket serial number.", { safe: [1, 98], group: "Behavior" }),
+      R("lag", "Queue lag", 0, 20, 3, "Number of customers being served ahead.", { safe: [0, 12], group: "Behavior" }),
+    ],
+    versions: [
+      { name: "Bakery counter", values: { prefix: "B", label: "Bread counter" } },
+      { name: "Long queue", values: { lag: 12 } },
+      { name: "Fast service", values: { speed: 1.6, feel: "Light" } },
+    ],
+    details: [
+      { cls: "a", text: "Ticket edge slides out from the dispenser mouth on press." },
+      { cls: "b", text: "Done state announces your turn has arrived." },
+      { cls: "c", text: "Now Serving readout counts the queue in mono numerals." },
+      { cls: "e", text: "Pressing Enter or Space draws the next ticket." },
+    ],
+    signature: { name: "Ticket dispenses from slot", ms: 2200 },
+  }),
+  mk(43, {
+    id: "postage-meter",
+    name: "Postage Meter",
+    category: "Inputs",
+    world: PO,
+    verb: "frank",
+    kind: "instrument",
+    uncommon: true,
+    motion: "subtle",
+    tags: ["meter", "stepper", "number", "franking", "currency"],
+    tagline: "THE PRICE ROLLS INTO PLACE.",
+    description: "A number input with odometer drums and a meter's patience.",
+    pitch: "A precision stepper styled as a postal franking machine. Digits roll vertically like mechanical odometer drums to dial in exact postage values.",
+    parts: [
+      P(1, "Minus", "Decrement step button", "step", "line"),
+      P(2, "Drums", "Mechanical rolling digit wheels", "value", "digits", "currency", "speed", "feel"),
+      P(3, "Plus", "Increment step button", "step", "max", "accent"),
+    ],
+    settings: [
+      R("value", "Start value", 0, 99, 0.85, "Initial numeric value.", { step: 0.05, safe: [0, 99], group: "Behavior" }),
+      R("step", "Step size", 0.01, 1, 0.05, "Amount added or subtracted per step.", { step: 0.01, safe: [0.01, 1], group: "Behavior" }),
+      R("digits", "Drum count", 3, 6, 4, "Number of visible digit drums.", { safe: [3, 6], group: "Shape" }),
+      R("max", "Maximum limit", 1, 999, 9.99, "Maximum permitted value before warning.", { safe: [1, 999], group: "Behavior" }),
+      T("currency", "Currency symbol", "£"),
+      T("label", "Label", "Postage"),
+    ],
+    versions: [
+      { name: "Dollars", values: { currency: "$", step: 0.25 } },
+      { name: "Integer units", values: { currency: "№", step: 1, value: 3 } },
+      { name: "Heavy dial", values: { feel: "Heavy", speed: 0.8 } },
+    ],
+    details: [
+      { cls: "a", text: "Digits roll vertically with mechanical drum animation." },
+      { cls: "b", text: "Exceeding the limit flashes an OVER warning in accent color." },
+      { cls: "e", text: "Up and Down arrows step value; Shift multiplies step by 10." },
+    ],
+    signature: { name: "Drums roll to target value", ms: 1800 },
+  }),
+  mk(44, {
+    id: "safety-interlock",
+    name: "Safety Interlock",
+    category: "Toggles",
+    world: CR,
+    verb: "lock",
+    kind: "instrument",
+    uncommon: true,
+    motion: "subtle",
+    tags: ["switch", "safety", "guard", "interlock", "toggle"],
+    tagline: "LIFT THE GUARD TO ARM.",
+    description: "A dual-action switch with a hinged guard that prevents accidental activation.",
+    pitch: "An industrial control switch with a mechanical guard cover. The guard must be rotated open before the switch toggle can be flipped to live state.",
+    parts: [
+      P(1, "Frame", "Switch casing and mounting", "line", "corners"),
+      P(2, "Guard", "Hinged cover protecting the toggle", "speed", "feel"),
+      P(3, "Toggle", "Two-position sliding actuator", "accent", "onWord", "offWord"),
+    ],
+    settings: [
+      T("onWord", "Live label", "LIVE"),
+      T("offWord", "Safe label", "SAFE"),
+      B("armed", "Guard initially raised", false, "Whether the protective cover starts open."),
+    ],
+    versions: [
+      { name: "Armed & ready", values: { armed: true } },
+      { name: "Emergency override", values: { onWord: "HOT", offWord: "COLD" } },
+    ],
+    details: [
+      { cls: "a", text: "Guard cover rotates 70° upward on its bottom hinge." },
+      { cls: "b", text: "Closing the guard automatically resets the switch to safe." },
+      { cls: "e", text: "Space lifts the guard; Enter toggles the switch." },
+    ],
+    signature: { name: "Guard lifts and switch throws", ms: 2000 },
+  }),
+  mk(45, {
+    id: "signal-lamp",
+    name: "Signal Lamp",
+    category: "Indicators",
+    world: RW,
+    verb: "indicate",
+    kind: "instrument",
+    uncommon: true,
+    motion: "subtle",
+    tags: ["lamp", "indicator", "status", "signal", "semaphore"],
+    tagline: "CLEAR, CAUTION, OR STOP.",
+    description: "A mechanical status indicator with multi-state semaphore blade and lamp.",
+    pitch: "A panel indicator lamp that signals system status through physical blade position and jeweled lamp illumination across Stop, Caution, and Clear states.",
+    parts: [
+      P(1, "Mast", "Support post and lens frame", "line"),
+      P(2, "Blade", "Position arm indicating state", "accent", "speed", "feel"),
+      P(3, "Readout", "Status caption", "cap", "trk"),
+    ],
+    settings: [
+      C("status", "Signal state", ["CLEAR", "CAUTION", "STOP"], "CLEAR", "Active signal aspect.", "Behavior"),
+      T("label", "Caption", "Line status"),
+    ],
+    versions: [
+      { name: "Caution aspect", values: { status: "CAUTION" } },
+      { name: "Danger stop", values: { status: "STOP" } },
+    ],
+    details: [
+      { cls: "a", text: "Arm articulates between 0° (Stop), -45° (Caution), and -90° (Clear)." },
+      { cls: "b", text: "Stop state illuminates lens in accent color." },
+      { cls: "e", text: "Click or Space cycles through signal aspects." },
+    ],
+    signature: { name: "Aspect switches to clear", ms: 1600 },
   }),
 ];

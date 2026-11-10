@@ -68,3 +68,14 @@ Tracking log for components imported into main UI library from source folders.
   - Moment problem state ("MISCOUNT") in accent.
 - **Left out**: Audio sound blip.
 
+---
+
+## Batch 1: Buttons, Toggles & Switches
+- **envelope-card (Added as Variant)**: Merged as `"Pocket"` variant of FIG. 003 `envelope-flap` (Cards). Adds wax seal, official dispatch envelope style, and transit stamp.
+- **punch-checkbox (Added as Variant)**: Merged as `"Manifest"` variant of FIG. 006 `ticket-punch` (Toggles). Adds multi-item customs checklist format with interactive punch holes.
+- **queue-ticket (Imported as New Plate)**: FIG. 042 in `src/kit/catalog3.ts` and `src/demos/g.tsx`. Take-a-number dispenser with slide-out ticket and live queue length readout.
+- **postage-meter (Imported as New Plate)**: FIG. 043 in `src/kit/catalog3.ts` and `src/demos/g.tsx`. Franking machine with rolling decimal odometer digit drums and keyboard step controls.
+- **safety-interlock (Imported as New Plate)**: FIG. 044 in `src/kit/catalog3.ts` and `src/demos/g.tsx`. Industrial switch with hinged protective guard cover and arming mechanism.
+- **signal-lamp (Imported as New Plate)**: FIG. 045 in `src/kit/catalog3.ts` and `src/demos/g.tsx`. Multi-state railway semaphore arm and illuminated aspect indicator (Clear / Caution / Stop).
+
+

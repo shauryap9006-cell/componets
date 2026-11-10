@@ -83,7 +83,30 @@ export function Postmark(p: DemoProps) {
 // @plate envelope-flap
 export function EnvelopeFlap(p: DemoProps) {
   const a = useAct(p, 2600);
-  const open = a.over;
+  const open = a.over || p.moment === "done";
+
+  if (p.v.style === "Pocket") {
+    const to = String(p.v.to ?? "To: the reader");
+    const note = String(p.v.note ?? "The details are enclosed. Read slowly.");
+    const seal = Boolean(p.v.seal ?? true);
+    return (
+      <div {...a.bind} tabIndex={0} role="group" aria-label={`${to}: ${note}`} className="relative h-[132px] w-[220px]" style={{ perspective: 600 }}>
+        <div data-part="3" className="tr absolute inset-x-3 top-2 flex h-[112px] flex-col justify-between border border-ink bg-paper p-3 text-left" style={{ ...bw, transitionDuration: d(480), transitionDelay: open ? d(160) : "0ms", transform: open ? "translateY(-40px)" : "none", zIndex: open ? 2 : 0 }}>
+          <span className="m soft block text-[10px]">{to}</span>
+          <span className="line-clamp-3 text-[13px] leading-tight">{note}</span>
+          <span className="m soft text-[9px]">{open ? "DISPATCH OPENED" : "SEALED ENCLOSURE"}</span>
+        </div>
+        <div data-part="1" className="absolute inset-0 border border-ink bg-plate" style={{ ...bw, zIndex: 1, clipPath: "polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%)" }} />
+        <svg data-part="2" aria-hidden viewBox="0 0 220 72" preserveAspectRatio="none" className="tr absolute inset-x-0 top-0 h-[72px] w-[220px] origin-top" style={{ transitionDuration: d(480), transform: open ? "rotateX(180deg)" : "none", zIndex: open ? 0 : 3 }}>
+          <path d="M0 0 L110 72 L220 0 Z" fill="var(--plate)" stroke="currentColor" strokeWidth="var(--ln)" />
+        </svg>
+        {seal && (
+          <span aria-hidden className="tr absolute left-[100px] top-[60px] size-5 rounded-full" style={{ background: "var(--acc)", zIndex: 4, opacity: open ? 0 : 1, transitionDuration: d(160) }} />
+        )}
+      </div>
+    );
+  }
+
   return (
     <div {...a.bind} tabIndex={0} role="group" aria-label={`${p.v.title}: ${p.v.note}`} className="relative h-[120px] w-[200px]" style={{ perspective: 600 }}>
       <div data-part="3" className="tr absolute inset-x-3 top-[42px] flex h-[72px] flex-col gap-1 border border-ink bg-plate p-2.5" style={{ ...bw, transitionDuration: d(480), transitionDelay: open ? d(160) : "0ms", transform: open ? `translateY(-${Math.round(Number(p.v.lift) * 0.9)}px)` : "none" }}>
@@ -163,6 +186,46 @@ export function TicketPunch(p: DemoProps) {
   const [on, setOn] = useState(false);
   const hit = on || a.sig || p.moment === "done";
   const sq = p.v.shape === "Square";
+
+  if (p.v.style === "Manifest") {
+    const raw = String(p.v.items ?? "Nothing to declare, Goods over limit, Plants or seeds");
+    const items = raw.split(",").map((s) => s.trim()).filter(Boolean);
+    const count = hit ? items.length : 1;
+    return (
+      <div {...a.bind} role="group" aria-label={String(p.v.label)} className="flex w-[240px] flex-col gap-1 border border-ink bg-paper p-3" style={bw}>
+        <span className="m soft block text-[10px] tracking-wider">{String(p.v.label).toUpperCase()}</span>
+        <div className="flex flex-col divide-y divide-ink/20">
+          {items.map((it, idx) => {
+            const punched = hit || (on && idx === 0);
+            return (
+              <button
+                key={it}
+                type="button"
+                onClick={() => setOn((o) => !o)}
+                className="flex items-center justify-between py-1.5 text-left text-[13px]"
+              >
+                <span className="truncate pr-2">{it}</span>
+                <span
+                  className="grid size-5 place-items-center border border-dashed border-ink text-[11px]"
+                  style={{
+                    borderRadius: sq ? 0 : 999,
+                    background: punched ? "var(--ink)" : "transparent",
+                    color: punched ? "var(--paper)" : undefined,
+                  }}
+                >
+                  {punched ? "✓" : "·"}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        <span className="m soft mt-1 block text-[9px]">
+          {hit ? "ALL ITEMS CHECKED" : `${count} OF ${items.length} PUNCHED`}
+        </span>
+      </div>
+    );
+  }
+
   return (
     <button {...a.bind} role="checkbox" aria-checked={hit} onClick={() => setOn((o) => !o)} data-part="1" className="relative flex h-16 w-[236px] items-center justify-between border border-ink pl-4 pr-3 text-left" style={bw}>
       <span className="min-w-0">

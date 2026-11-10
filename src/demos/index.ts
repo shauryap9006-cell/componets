@@ -17,4 +17,5 @@ export const DEMOS: Record<string, ComponentType<DemoProps>> = {
   fader: E.Fader, metronome: E.Metronome, "step-sequencer": E.StepSequencer, "comb-field": E.CombField, "barcode-scan": E.BarcodeScan, "strike-out": E.StrikeOut,
   barograph: F.Barograph, "compass-bearing": F.CompassBearing, "moon-phase": F.MoonPhase, "composing-stick": F.ComposingStick, "kerning-pair": F.KerningPair, "width-axis": F.WidthAxis,
   "rubber-stamp": G.RubberStamp, "signal-lever": G.SignalLever, "plotter-sparkline": G.PlotterSparkline, "tally-counter": G.TallyCounter,
+  "queue-ticket": G.QueueTicket, "postage-meter": G.PostageMeter, "safety-interlock": G.SafetyInterlock, "signal-lamp": G.SignalLamp,
 };
