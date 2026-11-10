@@ -1,5 +1,5 @@
 "use client";
-import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { DEMOS } from "@/demos";
 import { usePrefersReduced } from "./act";
 import { type ComponentSpec, type Moment, type Val, type Values, FEELS, defaults, fig } from "./spec";
@@ -34,7 +34,9 @@ export function Stage({ spec, values, moment = "rest", play = 0, onSet = noop, k
   return (
     <div ref={outer} className={`stage ${bench ? "bench-stage" : ""}`} data-moment={moment} data-reduced={reduced ? 1 : undefined} data-press={v.pressDrop ? 1 : undefined} style={style}>
       <div ref={inner} className="stage-in" dir={v.rtl ? "rtl" : "ltr"} style={{ scale: String(Number((base * fit).toFixed(3))), transition: "scale 240ms var(--expo), opacity 240ms" }}>
-        {Demo ? <Demo v={v} moment={moment} play={play} reduced={reduced} set={onSet} /> : null}
+        <Suspense fallback={null}>
+          {Demo ? <Demo v={v} moment={moment} play={play} reduced={reduced} set={onSet} /> : null}
+        </Suspense>
       </div>
       {moment === "busy" && (
         <>
