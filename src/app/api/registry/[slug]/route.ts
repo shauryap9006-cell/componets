@@ -5,7 +5,7 @@ import { clampPatch, fig } from "@/kit/spec";
 import { site } from "@/site.config";
 
 export const dynamic = "force-dynamic";
-const FILES = ["a", "b", "c", "d", "e", "f", "g", "h", "i"];
+const FILES = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
 
 async function source(slug: string) {
   const dir = path.join(process.cwd(), "src");

@@ -112,6 +112,39 @@ Tracking log for components imported into main UI library from source folders.
 - **file-dropzone (Imported as New Plate)**: FIG. 063 in `src/kit/catalog3.ts` and `src/demos/i.tsx`. Darkroom light table negative inspection tray with crop corners and metadata file receipt.
 - **shortcut-recorder (Imported as New Plate)**: FIG. 064 in `src/kit/catalog3.ts` and `src/demos/i.tsx`. Mechanical keycap binding recorder with live keystroke capture and embossed tile aesthetic.
 
+---
+
+## Batch 4: Typography, Print & Media
+- **misregister-heading (Added as Variant)**: Merged as `"Heading"` variant of FIG. 007 `misregister` (Print). Editorial title masthead with registration corner marks and CMYK chromatic shift.
+- **halftone-avatar (Added as Variant)**: Merged as `"Avatar"` variant of FIG. 008 `halftone-dial` (Print). Circular halftone screen portrait mask with responsive pointer luminance.
+- **ink-pull-dither (Added as Variant)**: Merged as `"Dither"` variant of FIG. 009 `ink-pull` (Loaders). Ordered Bayer 4×4 bitmap dither screen reveal.
+- **width-specimen (Added as Variant)**: Merged as `"Specimen"` variant of FIG. 036 `width-axis` (Type). Multi-weight typographic specimen card displaying simultaneous variable width axis tracks.
+- **scramble-decode (Imported as New Plate)**: FIG. 065 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Typographic cipher descrambler resolving random glyphs into clean letterforms.
+- **rolling-numerals (Imported as New Plate)**: FIG. 066 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Mechanical digit roller with vertical reel scrolling and step controls.
+- **outline-numerals (Imported as New Plate)**: FIG. 067 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Architectural zinc stencil numerals with bridge breaks and hairline outline stroke.
+- **running-head (Imported as New Plate)**: FIG. 068 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Swiss editorial folio runner bar with dual page numbers and coordinate hairline rule.
+- **ticker-tape (Imported as New Plate)**: FIG. 069 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Perforated paper tape reader with 5-channel Baudot punch marks and text stream.
+- **kerning-rope (Imported as New Plate)**: FIG. 070 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Elastic catenary tension cord linking glyph side-bearings for precision kerning.
+- **redline-diff (Imported as New Plate)**: FIG. 071 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Legal editorial revision plate with redline strikeout and approved superseding text.
+- **misregistration-text (Imported as New Plate)**: FIG. 072 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. CMYK 4-plate color separation with pointer-driven chromatic plate misalignment.
+- **sparkwords (Imported as New Plate)**: FIG. 073 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Tufte inline typographic sparkline glyph embedded directly within running prose.
+- **type-on-grid (Imported as New Plate)**: FIG. 074 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Swiss modular typography grid with baseline ruler coordinates and column gutters.
+- **dither-image (Imported as New Plate)**: FIG. 075 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Bayer 4×4 ordered matrix bitmap dither with interactive threshold illumination.
+- **ascii-image (Imported as New Plate)**: FIG. 076 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. CRT phosphor character raster matrix mapping image luminance to monospaced glyph density.
+- **scan-line-reveal (Imported as New Plate)**: FIG. 077 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Radar cathode ray tube raster wiper with continuous traveling electron beam.
+- **before-after (Imported as New Plate)**: FIG. 078 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Photographic inspection split wiper with hairline divider curtain between raw negative and fixed print.
+- **waveform-player (Imported as New Plate)**: FIG. 079 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Reel-to-reel magnetic tape head scrubber with 28-bar audio waveform and playhead cursor.
+- **perforated-frame (Imported as New Plate)**: FIG. 080 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. 35mm film negative strip with rectangular sprocket drive holes and manufacturer edge rebate.
+- **small-multiples (Imported as New Plate)**: FIG. 081 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Edward Tufte small multiples comparison grid sharing common baseline scales.
+- **risograph-image (Imported as New Plate)**: FIG. 082 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Dual-drum Risograph press with Teal and Fluo Pink cylinders and multiply overprint mixing.
+- **letterpress (Imported as New Plate)**: FIG. 083 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Deep letterpress cotton paper deboss with fiber relief shadow and typeset impression.
+- **crop-frame (Imported as New Plate)**: FIG. 084 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Darkroom easel masking crop frame with 3:2, 4:3, 1:1, 16:9 ratio detents and rule-of-thirds grid.
+- **tear-card (Imported as New Plate)**: FIG. 085 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Bulletin placard with perforated tear-off fringe tabs that tear away individually.
+- **dossier (Imported as New Plate)**: FIG. 086 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Confidential archive folder sealed with dual rivet eyelets and figure-eight wrapping cord.
+- **aperture-tip (Imported as New Plate)**: FIG. 087 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Optical camera iris tooltip rotating diaphragm leaves open to frame contextual annotation.
+- **declaration-dialog (Imported as New Plate)**: FIG. 088 in `src/kit/catalog3.ts` and `src/demos/j.tsx`. Customs clearance modal dialog with itemized manifest and authorization stamp.
+
+
 
 
 

@@ -111,7 +111,8 @@ export const CATALOG_2: ComponentSpec[] = [
   mk(36, { id: "width-axis", name: "Width Axis", category: "Type", world: TC, verb: "stretch", kind: "specimen", uncommon: true, motion: "active", tags: ["variable font", "heading"], plateControl: "width",
     tagline: "ONE DRAWING, MANY WIDTHS.", description: "The word widens as the pointer travels.", pitch: "A variable-font specimen. Pointer position sets the width axis; a ruled track shows where on the axis the word sits.",
     parts: [P(1, "Word", "The specimen", "word", "weight", "size"), P(2, "Axis", "The ruled track", "width", "accent", "line"), P(3, "Reading", "Axis values", "cap", "trk", "soft")],
-    settings: [T("word", "Word", "Hamburg"), R("width", "Width", 62, 125, 100, "The width axis at rest.", { group: "Type" }), R("weight", "Weight", 100, 900, 650, "How heavy the strokes are.", { step: 50, group: "Type" })],
+    settings: [C("style", "Style", ["Axis", "Specimen"], "Axis", "Axis is continuous single-word tracker; Specimen is full multi-weight type specimen card."), T("word", "Word", "Hamburg"), R("width", "Width", 62, 125, 100, "The width axis at rest.", { group: "Type" }), R("weight", "Weight", 100, 900, 650, "How heavy the strokes are.", { step: 50, group: "Type" })],
+    versions: [{ name: "Specimen card", values: { style: "Specimen" } }],
     details: [{ cls: "c", text: "Axis tags are set as the font names them: wdth, wght." }, { cls: "e", text: "Arrows move the axis three units." }, { cls: "d", text: "The word never wraps; the line height is fixed." }],
     signature: { name: "Condensed to extended", ms: 2800 } }),
 ];

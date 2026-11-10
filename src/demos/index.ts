@@ -9,6 +9,7 @@ import * as F from "./f";
 import * as G from "./g";
 import * as H from "./h";
 import * as I from "./i";
+import * as J from "./j";
 
 /** Mechanism library: one hand-built renderer per spec id. */
 export const DEMOS: Record<string, ComponentType<DemoProps>> = {
@@ -23,4 +24,7 @@ export const DEMOS: Record<string, ComponentType<DemoProps>> = {
   "counting-preloader": H.CountingPreloader, "line-draw-loader": H.LineDrawLoader, "dot-wave-loader": H.DotWaveLoader, "clock-hand-loader": H.ClockHandLoader, "block-cursor-loader": H.BlockCursorLoader,
   "sundial-clock": H.SundialClock, "star-chart": H.StarChart, "analog-clock": H.AnalogClock, "seven-segment": H.SevenSegment, stopwatch: H.Stopwatch, "ticker-clock": H.TickerClock, "film-leader": H.FilmLeader,
   "patch-bay": I.PatchBay, teleprinter: I.Teleprinter, "scrubbable-number": I.ScrubbableNumber, "combination-lock": I.CombinationLock, protractor: I.Protractor, "file-dropzone": I.FileDropzone, "shortcut-recorder": I.ShortcutRecorder,
+  "scramble-decode": J.ScrambleDecode, "rolling-numerals": J.RollingNumerals, "outline-numerals": J.OutlineNumerals, "running-head": J.RunningHead, "ticker-tape": J.TickerTape, "kerning-rope": J.KerningRope, "redline-diff": J.RedlineDiff, "misregistration-text": J.MisregistrationText, sparkwords: J.Sparkwords, "type-on-grid": J.TypeOnGrid,
+  "dither-image": J.DitherImage, "ascii-image": J.AsciiImage, "scan-line-reveal": J.ScanLineReveal, "before-after": J.BeforeAfter, "waveform-player": J.WaveformPlayer, "perforated-frame": J.PerforatedFrame, "small-multiples": J.SmallMultiples, "risograph-image": J.RisographImage,
+  letterpress: J.Letterpress, "crop-frame": J.CropFrame, "tear-card": J.TearCard, dossier: J.Dossier, "aperture-tip": J.ApertureTip, "declaration-dialog": J.DeclarationDialog,
 };

@@ -12,13 +12,20 @@ export function Misregister(p: DemoProps) {
   const r = (Number(p.v.angle) * Math.PI) / 180, k = a.over ? Number(p.v.drift) : 1;
   const x = Math.cos(r) * k, y = Math.sin(r) * k;
   const word = String(p.v.word) || "—";
+  const isHeading = p.v.style === "Heading";
   return (
     <div {...a.bind} tabIndex={0} role="img" aria-label={word} className="relative flex flex-col items-start gap-1">
-      <span className="m soft">Plate 1 · ink &nbsp; Plate 2 · accent</span>
-      <span className="relative block max-w-[260px] truncate font-display text-[54px] font-extrabold leading-[0.95]" style={{ fontStretch: "75%", letterSpacing: "-0.03em" }}>
+      <div className="flex w-full items-center justify-between">
+        <span className="m soft">{isHeading ? "EDITORIAL TITLE · DUAL PASS" : "Plate 1 · ink   Plate 2 · accent"}</span>
+        {isHeading && <span className="m soft">CMYK · +{k}px</span>}
+      </div>
+      <div className="relative block max-w-[260px] truncate font-display text-[54px] font-extrabold leading-[0.95]" style={{ fontStretch: "75%", letterSpacing: "-0.03em" }}>
+        {isHeading && (
+          <span className="pointer-events-none absolute -left-2 -top-2 size-2 border-t border-l border-ink" />
+        )}
         <span data-part="2" aria-hidden className="tr absolute inset-0 truncate" style={{ color: "var(--acc)", transform: `translate(${x}px, ${y}px)`, transitionDuration: d(480) }}>{word}</span>
         <span data-part="1" className="relative" style={{ mixBlendMode: "multiply" }}>{word}</span>
-      </span>
+      </div>
       <span data-part="3" className="m flex w-full justify-between"><span className="soft">Off register</span><span>Δ {x.toFixed(1)} / {y.toFixed(1)} px</span></span>
     </div>
   );
@@ -31,6 +38,7 @@ export function HalftoneDial(p: DemoProps) {
   const [lx, setLx] = useState(0.3);
   const t = useTick(40, a.sig && !p.reduced);
   const light = a.sig ? (t % 60) / 60 : lx;
+  const isAvatar = p.v.style === "Avatar";
   const dots = [];
   for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
     const u = (i + 0.5) / cols, v = (j + 0.5) / rows;
@@ -41,8 +49,10 @@ export function HalftoneDial(p: DemoProps) {
     <div {...a.bind} tabIndex={0} role="img" aria-label="Halftone screen following a light" className="flex flex-col gap-2"
       onPointerMove={(e) => { const b = e.currentTarget.getBoundingClientRect(); setLx((e.clientX - b.left) / b.width); }}
       onKeyDown={(e) => { if (e.key === "ArrowRight") setLx((l) => Math.min(1, l + 0.05)); if (e.key === "ArrowLeft") setLx((l) => Math.max(0, l - 0.05)); }}>
-      <svg data-part="1" width={W} height={rows * cell} viewBox={`0 0 ${W} ${rows * cell}`}>{dots}</svg>
-      <span data-part="2" className="m flex justify-between"><span className="soft">{cols} lines · round dot</span><span>Light {Math.round(light * 100)}%</span></span>
+      <div className={isAvatar ? "overflow-hidden rounded-full border border-ink p-1" : undefined} style={isAvatar ? bw : undefined}>
+        <svg data-part="1" width={W} height={rows * cell} viewBox={`0 0 ${W} ${rows * cell}`}>{dots}</svg>
+      </div>
+      <span data-part="2" className="m flex justify-between"><span className="soft">{isAvatar ? "Halftone avatar mask" : `${cols} lines · round dot`}</span><span>Light {Math.round(light * 100)}%</span></span>
     </div>
   );
 }
@@ -58,14 +68,25 @@ export function InkPull(p: DemoProps) {
     return () => clearInterval(t);
   }, [a.over, p.reduced]);
   const pct = p.moment === "done" ? 100 : run ?? Number(p.v.at);
+  const isDither = p.v.style === "Dither";
   return (
     <div {...a.bind} tabIndex={0} role="progressbar" aria-valuenow={Math.round(pct)} aria-valuemin={0} aria-valuemax={100} aria-label={String(p.v.label)} className="flex w-[200px] flex-col gap-2">
       <div data-part="1" className="relative h-[92px] border border-ink" style={bw}>
-        <div data-part="3" className="absolute inset-x-0 top-0 bg-ink" style={{ height: `${pct}%`, opacity: 0.9 }} />
-        <div className="hatch absolute inset-x-0 bottom-0" style={{ top: `${pct}%` }} />
+        {isDither ? (
+          <div data-part="3" className="absolute inset-0 flex flex-wrap opacity-80" aria-hidden>
+            {Array.from({ length: 40 }, (_, i) => (
+              <span key={i} className="size-[20px] border border-ink/20" style={{ background: (i * 2.5) < pct ? "var(--ink)" : "transparent" }} />
+            ))}
+          </div>
+        ) : (
+          <>
+            <div data-part="3" className="absolute inset-x-0 top-0 bg-ink" style={{ height: `${pct}%`, opacity: 0.9 }} />
+            <div className="hatch absolute inset-x-0 bottom-0" style={{ top: `${pct}%` }} />
+          </>
+        )}
         <div data-part="2" className="absolute -inset-x-2 h-[5px]" style={{ top: `calc(${pct}% - 2px)`, background: "var(--acc)" }} />
       </div>
-      <span className="m flex justify-between"><span className="soft truncate">{pct >= 100 ? "Proof pulled" : String(p.v.label)}</span><span data-part="4">{String(Math.round(pct)).padStart(3, "0")}%</span></span>
+      <span className="m flex justify-between"><span className="soft truncate">{pct >= 100 ? (isDither ? "Dither complete" : "Proof pulled") : String(p.v.label)}</span><span data-part="4">{String(Math.round(pct)).padStart(3, "0")}%</span></span>
     </div>
   );
 }

@@ -125,17 +125,28 @@ export function WidthAxis(p: DemoProps) {
   const [u, setU] = useState<number | null>(null);
   const t = useTick(40, a.sig && !p.reduced);
   const f = a.sig ? 0.5 + Math.sin(t / 9) * 0.5 : u ?? (Number(p.v.width) - 62) / 63, wd = Math.round(62 + f * 63), wg = Number(p.v.weight);
+  const isSpecimen = p.v.style === "Specimen";
   return (
     <div {...a.bind} tabIndex={0} role="img" aria-label={`${p.v.word} at width ${wd}`} className="flex w-[250px] flex-col gap-2" dir="ltr"
       onPointerMove={(e) => { const b = e.currentTarget.getBoundingClientRect(); setU(Math.min(1, Math.max(0, (e.clientX - b.left) / b.width))); }}
       onPointerLeave={() => { a.bind.onPointerLeave(); setU(null); }}
       onKeyDown={(e) => { if (e.key === "ArrowRight") p.set("width", Math.min(125, Number(p.v.width) + 3)); if (e.key === "ArrowLeft") p.set("width", Math.max(62, Number(p.v.width) - 3)); }}>
-      <span data-part="1" className="block h-[52px] overflow-hidden whitespace-nowrap font-display text-[50px] leading-none" style={{ fontVariationSettings: `"wdth" ${wd}, "wght" ${wg}`, fontStretch: `${wd}%`, fontWeight: wg, letterSpacing: "-0.02em" }}>{String(p.v.word) || "—"}</span>
+      {isSpecimen ? (
+        <div data-part="1" className="flex flex-col gap-1 overflow-hidden">
+          {[400, 600, 800].map((weight) => (
+            <span key={weight} className="block whitespace-nowrap font-display text-[22px] leading-none" style={{ fontVariationSettings: `"wdth" ${wd}, "wght" ${weight}`, fontStretch: `${wd}%`, fontWeight: weight, letterSpacing: "-0.02em" }}>
+              {String(p.v.word) || "—"} <span className="text-[10px] font-mono opacity-50">{weight}</span>
+            </span>
+          ))}
+        </div>
+      ) : (
+        <span data-part="1" className="block h-[52px] overflow-hidden whitespace-nowrap font-display text-[50px] leading-none" style={{ fontVariationSettings: `"wdth" ${wd}, "wght" ${wg}`, fontStretch: `${wd}%`, fontWeight: wg, letterSpacing: "-0.02em" }}>{String(p.v.word) || "—"}</span>
+      )}
       <span data-part="2" className="relative block h-3 border-x border-ink" style={{ borderWidth: "0 var(--ln)" }}>
         <i className="absolute inset-x-0 top-1/2 bg-ink" style={{ height: "var(--ln)" }} />
         <i className="absolute -top-0.5 h-4" style={{ left: `${f * 100}%`, width: 3, background: "var(--acc)", transition: u !== null || a.sig ? "none" : `left ${d(240)} var(--ez)` }} />
       </span>
-      <span data-part="3" className="m flex justify-between"><span>wdth {String(wd).padStart(3, "0")}</span><span className="soft">wght {wg}</span></span>
+      <span data-part="3" className="m flex justify-between"><span>wdth {String(wd).padStart(3, "0")}</span><span className="soft">{isSpecimen ? "3 weights · specimen" : `wght ${wg}`}</span></span>
     </div>
   );
 }
