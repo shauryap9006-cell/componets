@@ -1,9 +1,13 @@
 import { Suspense } from "react";
-import { Bench } from "@/bench/Bench";
+import { BenchComingSoon } from "@/bench/BenchComingSoon";
 import { site } from "@/site.config";
 
-export const metadata = { title: `The Bench — ${site.name}` };
+export const metadata = { title: `The Bench (Coming Soon) — ${site.name}` };
 
 export default function WorkshopPage() {
-  return <Suspense fallback={<p className="wrap cap py-24">Clearing the bench…</p>}><Bench /></Suspense>;
+  return (
+    <Suspense fallback={<p className="wrap cap py-24">Clearing the bench…</p>}>
+      <BenchComingSoon />
+    </Suspense>
+  );
 }

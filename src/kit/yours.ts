@@ -20,7 +20,15 @@ export const importYours = (items: Yours[]) => write([...read().filter((x) => !i
 export const getYours = (id: string) => read().find((x) => x.id === id);
 
 export async function fetchCode(spec: ComponentSpec, values?: Values): Promise<string> {
-  try { const r = await fetch(`/api/registry/${spec.id}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ values: values ?? {} }) }); if (r.ok) return await r.text(); } catch {}
+  try {
+    const { generatePlateCode } = await import("./source-provider");
+    const out = generatePlateCode(spec, values);
+    if (out) return out;
+  } catch {}
+  try {
+    const r = await fetch(`/api/registry/${spec.id}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ values: values ?? {} }) });
+    if (r.ok) return await r.text();
+  } catch {}
   return `// ${spec.name} — source unavailable offline.\n// Spec: ${JSON.stringify({ id: spec.id, values }, null, 2)}`;
 }
 export const bump = (slug: string, kind: "code" | "prompt") => { fetch("/api/stats", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ slug, kind }) }).catch(() => {}); };
